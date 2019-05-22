@@ -1,0 +1,6 @@
+- Se trata de um sistema de cadastramento de freelas e pessoas;
+
+- Na opção de cadastro a pessoa irá ter duas opções: Se cadastrar como disponivel, ou cadastrar uma oportunidade de trabalho;
+
+- Quando a pessoa clicar em um freela e quiser ele, o sistema enviará um email para o criador daquele freela dizendo que há uma pessoa interessada na oportunidade, e vice-versa.
+

@@ -1,0 +1,16 @@
+.Inicial{
+}
+
+.fade-enter-active, .fade-leave-active {
+    transition: opacity .5s;
+  }
+.fade-enter, .fade-leave-to /* .fade-leave-active em versões anteriores a 2.1.8 */ {
+    opacity: 0;
+}
+
+.fade2-enter-active, .fade2-leave-active {
+    transition: opacity .5s;
+  }
+.fade2-enter, .fade2-leave-to /* .fade-leave-active em versões anteriores a 2.1.8 */ {
+    opacity: 0;
+}

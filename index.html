@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/bulma.min.css">
+    <title>Html do Jeito NINJA</title>
+    <link rel="stylesheet" href="css/stylesheet.css">
+</head>
+
+<body>
+    <div id="app">
+        <nav class="level navbar is-light" id="menu-p">
+            <p class="navbar-item has-text-centered"><a v-on:click="aba = 0">Pagina Inicial</a></p>
+            <p class="navbar-item has-text-centered"><a v-on:click="aba = 1">Cadastrar</a></p>
+            <p class="navbar-item has-text-centered"><a v-on:click="aba = 2">Procurar Freelas</a></p>
+            <p class="navbar-item has-text-centered"><a v-on:click="aba = 3">Procurar Pessoas</a></p>
+        </nav>
+        <transition name="fade">
+            <section id="inicial" v-show = "aba == 0">
+                <div class="container">
+                    <div class="columns">
+                        <div class="column is-one-third is-offset-one-third">
+                            <h1 class="title">
+                                Um sistema rápido de cadastramento de Freelas.
+                            </h1>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </transition>
+        <transition name="fade2">
+            <section id="cadastro" v-show="aba == 1">
+                <div class="container">
+                    <div class="columns">
+                        <div class="column is-4-desktop is-offset-7 is-offset-1-mobile is-10-mobile">
+                            <h1 class="title">Cadastre-se.</h1>
+                            <p>Para começar a utilizar nosso serviço, por favor, cadastre-se abaixo:</p>
+                        </div>
+                    </div>
+                    <div class="columns">
+                        <div class="column is-4-desktop is-offset-7 is-offset-1-mobile is-10-mobile">
+                        <form class="form" method="POST">
+                            <fieldset class="field">
+                                <label for="nome" class="label">
+                                    Nome Completo
+                                </label>
+                                <div class="control">
+                                    <input type="text" class="input" placeholder="Nome por favor" v-model="nome">
+                                </div>
+                            </fieldset>
+                            <fieldset class="field">
+                                <label for="username" class="label">
+                                    Nome de usuario
+                                </label>
+                                <div class="control">
+                                    <input type="text" id="username" name="username" class="input" placeholder="Para login" v-model="username">
+                                </div>
+                            </fieldset>
+                            <fieldset class="field">
+                                <label for="email" class="label">
+                                    Email
+                                </label>
+                                <div class="control">
+                                    <input type="text" name="email" id="email" class="input" v-model="email" placeholder="Seu endereco de email">
+                                </div>
+                            </fieldset>
+                            <fieldset class="field">
+                                    <label for="telefone" class="label">
+                                        Telefone
+                                    </label>
+                                    <div class="control">
+                                        <input type="tel" name="telefone" id="telefone" class="input" v-model="telefone" placeholder="Pode passar seu contato? :)">
+                                    </div>
+                            </fieldset>
+                            <fieldset class="field">
+                                <label for="pass" class="label">
+                                    Senha
+                                </label>
+                                <div class="control">
+                                    <input type="password" name="pass" id="pass" v-model="pass" class="input"
+                                        placeholder="Sua senha mais secreta">
+                                        {{passCrypt}}
+                                </div>
+                            </fieldset>
+                            <fieldset class="field">
+                                <label for="pass2" class="label">
+                                    Confirmar senha
+                                </label>
+                                <div class="control">
+                                    <input type="password" name="pass2" id="pass2" class="input" v-model="pass2"
+                                        placeholder="Digite novamente">
+                                </div>
+                            </fieldset>
+                            <button class="button is-link">Enviar</button>
+                        </form>
+                    </div>
+                    </div>
+                </div>
+            </section>
+        </transition>
+    </div>
+    <script src="https://unpkg.com/vue"></script>
+    <script src="https://unpkg.com/js-sha256"></script>
+    <script src="main.js">
+    </script>
+</body>
+
+</html>
