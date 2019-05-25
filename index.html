@@ -23,7 +23,7 @@
                 <div class="container">
                     <div class="columns">
                         <div class="column is-8-desktop is-offset-2-desktop">
-                            <h1 class="title">
+                            <h1 class="title has-text-centered" style="color:white">
                                 Um sistema rápido de cadastramento de Freelas.
                             </h1>
                         </div>
@@ -41,14 +41,22 @@
                         </div>
                     </div>
                     <div class="columns">
-                        <div class="column is-4-desktop is-offset-7 is-offset-1-mobile is-10-mobile">
-                        <form class="form" method="POST">
+                        <div class="column is-offset-7 is-offset-1-mobile is-10-mobile">
+                            <button class="button is-link" v-on:click="usuario=0">Profissional</button>
+                        </div>
+                        <div class="column">
+                            <button class="button is-link" v-on:click="usuario=1">Freelancer</button>
+                        </div>
+                    </div>
+                    <div class="columns">
+                        <div class="column is-4-desktop is-offset-7 is-offset-1-mobile is-10-mobile" v-if="usuario==0">
+                        <form class="form" method="POST" v-on:submit.prevent="cadastrarProfissional">
                             <fieldset class="field">
                                 <label for="nome" class="label">
                                     Nome Completo
                                 </label>
                                 <div class="control">
-                                    <input type="text" class="input" placeholder="Nome por favor" v-model="nome">
+                                    <input type="text" class="input" placeholder="Nome por favor" v-model="profissionalCadastro.nome">
                                 </div>
                             </fieldset>
                             <fieldset class="field">
@@ -56,7 +64,7 @@
                                     Nome de usuario
                                 </label>
                                 <div class="control">
-                                    <input type="text" id="username" name="username" class="input" placeholder="Para login" v-model="username">
+                                    <input type="text" id="username" name="username" class="input" placeholder="Para login" v-model="profissionalCadastro.username">
                                 </div>
                             </fieldset>
                             <fieldset class="field">
@@ -64,7 +72,15 @@
                                     Email
                                 </label>
                                 <div class="control">
-                                    <input type="text" name="email" id="email" class="input" v-model="email" placeholder="Seu endereco de email">
+                                    <input type="text" name="email" id="email" class="input" v-model="profissionalCadastro.email" placeholder="Seu endereco de email">
+                                </div>
+                            </fieldset>
+                            <fieldset>
+                                <label for="curriculo" class="label">
+                                    Coloque seu curriculo aqui
+                                </label>
+                                <div>
+                                    <input type="file" class="input">
                                 </div>
                             </fieldset>
                             <fieldset class="field">
@@ -72,7 +88,7 @@
                                         Telefone
                                     </label>
                                     <div class="control">
-                                        <input type="tel" name="telefone" id="telefone" class="input" v-model="telefone" placeholder="Pode passar seu contato? :)">
+                                        <input type="tel" name="telefone" id="telefone" class="input" v-model="profissionalCadastro.telefone" placeholder="Pode passar seu contato? :)">
                                     </div>
                             </fieldset>
                             <fieldset class="field">
@@ -80,9 +96,8 @@
                                     Senha
                                 </label>
                                 <div class="control">
-                                    <input type="password" name="pass" id="pass" v-model="pass" class="input"
+                                    <input type="password" name="pass" id="pass" v-model="profissionalCadastro.pass" class="input"
                                         placeholder="Sua senha mais secreta">
-                                        {{passCrypt}}
                                 </div>
                             </fieldset>
                             <fieldset class="field">
@@ -90,11 +105,56 @@
                                     Confirmar senha
                                 </label>
                                 <div class="control">
-                                    <input type="password" name="pass2" id="pass2" class="input" v-model="pass2"
+                                    <input type="password" name="pass2" id="pass2" class="input" v-model="profissionalCadastro.pass2"
                                         placeholder="Digite novamente">
                                 </div>
                             </fieldset>
-                            <button class="button is-link">Enviar</button>
+                            <button class="button is-primary" type="submit">Enviar</button>
+                        </form>
+                    </div>
+                    <div class="column is-4-desktop is-offset-7 is-offset-1-mobile is-10-mobile" v-if="usuario == 1">
+                        <form method="POST" v-on:submit.prevent="cadastrarOportunidade">
+                            <fieldset class="field">
+                                <label for="titulo" class="label">
+                                    Titulo
+                                </label>
+                                <div class="control">
+                                    <input type="text" name="titulo" v-model="freelaCadastro.titulo" id="titulo" class="input" placeholder="Qual a função">
+                                </div>
+                            </fieldset>
+                            <fieldset class="field">
+                                <label for="descricao" class="label">
+                                    Descrição
+                                </label>
+                                <div class="control">
+                                    <input type="text" name="descricao" v-model="freelaCadastro.descricao" id="descricao" class="input" placeholder="Breve resumo do que é para fazer">
+                                </div>
+                            </fieldset>
+                            <fieldset class="field">
+                                <label for="remuneracao" class="label">
+                                    Remuneração
+                                </label>
+                                <div class="control">
+                                    <input type="text" name="remuneracao" v-model="freelaCadastro.remuneracao" id="remuneracao" class="input" placeholder="Quanto se paga? :)">
+                                </div>
+                            </fieldset>
+                            <fieldset class="field">
+                                <label for="detalhes" class="label">
+                                    Detalhes
+                                </label>
+                                <div class="control">
+                                    <input type="text" name="detalhes" v-model="freelaCadastro.detalhes" id="detalhes" class="input" placeholder="Descreva mais coisas sobre o trabalho">
+                                </div>
+                            </fieldset>
+                            <fieldset class="field">
+                                <label for="urlImg">
+                                    Imagem
+                                </label>
+                                <div class="control">
+                                    <input type="file" name="urlImg" v-model="freelaCadastro.urlImg" class="input" id="urlImg">
+                                </div>
+                            </fieldset>
+                            <button class="button is-primary" type="submit">Enviar</button>
                         </form>
                     </div>
                     </div>
@@ -109,66 +169,26 @@
                            <h2 class="title">Encontre uma oportunidade!</h2>
                         </div>
                     </div><br>
-                    <div class="columns">
-                        <div class="card column is-4-desktop">
+                    <div class="columns is-multiline">
+                        <div class="card column is-2 is-10-mobile is-offset-1-mobile" v-for="(item, index) in oportunidades" v-bind:class="{'is-offset-1': (index%4>0)}">
                             <div class="card-image">
-                                <figure class="image is-4by3">
-                                    <img src="img/freela1.jpg" alt="">
-                                </figure>
+                                    <figure class="image is-4by3">
+                                        <img src="img/freela1.jpg" alt="">
+                                    </figure>
                             </div>
                             <div class="card-content">
                                 <div class="media">
-                                        <div class="media-left">
-                                                <figure class="image is-48x48">
-                                                  <img src="img/TerryPerson.jpg" alt="Placeholder image">
-                                                </figure>
-                                        </div>
                                         <div class="media-content">
                                             <p class="title is-4">
-                                                Terry Crews
+                                                {{item.titulo}}
                                             </p>
                                             <p class="subtitle is-8">
-                                                Homem Multimaravilhoso
+                                                {{item.descricao}}
                                             </p>
                                         </div>
-                                </div>
-                                <div class="content">
-                                    <div>
-                                        Lorem ipsum
-                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="card column is-4-desktop is-offset-1">
-                            <div class="card-image">
-                                <figure class="image is-4by3">
-                                    <img src="img/freela1.jpg" alt="">
-                                </figure>
-                            </div>
-                            <div class="card-content">
-                                <div class="media">
-                                        <div class="media-left">
-                                                <figure class="image is-48x48">
-                                                  <img src="img/TerryPerson.jpg" alt="Placeholder image">
-                                                </figure>
-                                        </div>
-                                        <div class="media-content">
-                                            <p class="title is-4">
-                                                Terry Crews
-                                            </p>
-                                            <p class="subtitle is-8">
-                                                Homem Multimaravilhoso
-                                            </p>
-                                        </div>
-                                </div>
-                                <div class="content">
-                                    <div>
-                                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Itaque quis aliquid accusantium in illo eius, inventore eveniet, quam doloribus atque consectetur! Officiis, corrupti. Aliquam minus fuga commodi officiis asperiores sequi?
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
                     </div>
                 </div>
             </section>
@@ -176,6 +196,7 @@
     </div>
     <script src="https://unpkg.com/vue"></script>
     <script src="https://unpkg.com/js-sha256"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="main.js">
     </script>
 </body>
