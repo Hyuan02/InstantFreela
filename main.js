@@ -35,19 +35,46 @@ window.onload = function(){
                 novoForm.append('email',app.profissionalCadastro.email);
                 novoForm.append('telefone',app.profissionalCadastro.telefone);
                 novoForm.append('senha',app.profissionalCadastro.pass);
-                axios.post('req.php',{
-                    req: 'pegarDadosFreela',
-                    nome: app.profissionalCadastro.nome,
-                    username: app.profissionalCadastro.username,
-                    email: app.profissionalCadastro.email,
-                    telefone: app.profissionalCadastro.telefone,
-                    pass: app.profissionalCadastro.pass
+                // axios.post('req.php',{
+                //     req: 'pegarDadosProfissional',
+                //     nome: app.profissionalCadastro.nome,
+                //     username: app.profissionalCadastro.username,
+                //     email: app.profissionalCadastro.email,
+                //     telefone: app.profissionalCadastro.telefone,
+                //     pass: app.profissionalCadastro.pass
+                // }).then((response)=>{
+                //     console.log(response);
+                //     // if(response.data.codigo == 200){
+                //     //     alert('O nome é: ' + response.data.nome);
+                //     // }
+
+                // });
+
+                axios.get('req.php',{
+                    params:{
+                        req:'testeGet'
+                    }
                 }).then((response)=>{
                     console.log(response);
-                    if(response.data.codigo == 200){
-                        alert('O nome é: ' + response.data.nome);
-                    }
                 });
+            },
+
+            cadastrarFreela: ()=>{
+                console.log('Requisicao cadastrar freela');
+                axios.post('req.php', {
+                    req:'pegarDadosFreela',
+                    titulo: app.freelaCadastro.titulo,
+                    descricao: app.freelaCadastro.descricao,
+                    remuneracao: app.freelaCadastro.remuneracao,
+                    detalhes: app.freelaCadastro.detalhes,
+                    urlImg: app.freelaCadastro.urlImg
+                }).then((response)=>
+            {
+                console.log(response);
+                    if(response.data.codigo == 200){
+                        alert('O titulo é: ' + response.data.nome);
+                    }
+            });
             }
         }
     });

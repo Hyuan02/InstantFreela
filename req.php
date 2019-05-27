@@ -2,12 +2,20 @@
 
 $data = json_decode(file_get_contents("php://input"), TRUE);
 
-$req = $data['req'] ?? $data['req'] ?? null;
+if($data['req'] == null)
+    $req = $_GET['req'];
+else
+    $req = $data['req'];
 
-if(isset($req) && $req=="pegarDadosFreela"){
-    $nome = $data['nome'];
-    echo json_encode(array(
-        "codigo" => 200,
-        "nome" => $nome
-    ));
-}
+
+
+echo $req;
+
+// if(isset($req) && $req=="pegarDadosProfissional"){
+//     $nome = $data['nome'];
+//     echo json_encode($data);
+// }
+
+// if(isset($req) && $req=='testeGet'){
+//     echo json_encode(array('nome' => 'Teste get com sucesso!'));
+// }
