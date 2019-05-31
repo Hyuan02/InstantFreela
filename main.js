@@ -5,6 +5,7 @@ window.onload = function(){
             titulo: "Aula 01 - Vue JS do jeito ninja!",
             profissionalCadastro:{nome:"", username:"", email:"", telefone:"", pass:"", pass2:""},
             freelaCadastro: {titulo:"", descricao:"", remuneracao:"", detalhes:"", urlImg:""},
+            textoFreela:"",
             aba:0,
             oportunidades:[
                 {titulo:"Web Design", descricao:"Design de um site em wordpress"},
@@ -61,6 +62,14 @@ window.onload = function(){
                         alert('O titulo é: ' + response.data.nome);
                     }
             });
+            },
+            buscarFreela: (response)=>{
+                axios.post('req.php',{
+                    req:'buscarDadosFreela',
+                    nome: response
+                }).then((response)=>{
+                    console.log(response.data);
+                });
             }
         }
     });

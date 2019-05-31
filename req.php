@@ -42,6 +42,24 @@ if(isset($req) && $req=="pegarDadosProfissional"){
     $conn->commit();
 }
 
+if(isset($req) && $req=="buscarDadosFreela"){
+    $nome = $data['nome'];
+    $busca = $nome;
+    $conn->beginTransaction();
+    $sql = sprintf("SELECT * FROM freelas where titulo like :nome ");
+    $processo = $conn->prepare($sql);
+    $processo->bindValue(":nome","%%".$nome."%%");
+    $processo->execute();
+    $resultado = $processo->fetch(PDO::FETCH_ASSOC);
+
+    echo json_encode(
+        array(
+            "codigo" => 200,
+            "resultado" => $resultado
+        )
+    );
+}
+
 // if(isset($req) && $req=='testeGet'){
 //     echo json_encode(array('nome' => 'Teste get com sucesso!'));
 // }

@@ -168,6 +168,11 @@
                         <div class="column is-5-desktop">
                            <h2 class="title">Encontre uma oportunidade!</h2>
                         </div>
+                        <div class="column is-3-desktop is-offset-3">
+                            <div class="control">
+                                <input class="input" type="text" v-model="textoFreela" name="textoFreela" id="textoFreela" placeholder="Procure um trabalho..." v-on:input="buscarFreela(textoFreela)">
+                            </div>
+                        </div>
                     </div><br>
                     <div class="columns is-multiline">
                         <div class="card column is-2 is-10-mobile is-offset-1-mobile" v-for="(item, index) in oportunidades" v-bind:class="{'is-offset-1': (index%4>0)}">

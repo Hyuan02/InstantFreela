@@ -1,6 +1,6 @@
 <?php
 
 $host = "localhost";
-$db = "FreelaNinja";
+$db = "AppFreela";
 $username = "postgres";
 $password = "ufc123";
