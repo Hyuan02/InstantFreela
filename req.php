@@ -1,5 +1,6 @@
 <?php
 
+
 $data = json_decode(file_get_contents("php://input"), TRUE);
 
 require_once 'dbconfig.php';
@@ -20,8 +21,6 @@ else
     $req = $data['req'];
 
 
-
-echo $req;
 
 if(isset($req) && $req=="pegarDadosProfissional"){
     $nome = $data['nome'];
@@ -58,6 +57,28 @@ if(isset($req) && $req=="buscarDadosFreela"){
             "resultado" => $resultado
         )
     );
+}
+
+
+if(isset($req) && $req="cadastrarUsuario"){
+    $username = $data['username'];
+    $email = $data['email'];
+    $senha = $data['pass'];
+
+    $conn->beginTransaction();
+
+    $sql = sprintf("INSERT INTO login VALUES ((select max(id) from login)+1, :username, :senha, :email)");
+    $processo = $conn->prepare($sql);
+    $processo->bindValue(":username", $username);
+    $processo->bindValue(":email", $email);
+    $processo->bindValue(":senha", $senha);
+    $processo->execute();
+    $conn->commit();
+
+    echo json_encode(array(
+        "codigo" => 200,
+        "mensagem" => "Tudo Legal"
+    ));
 }
 
 // if(isset($req) && $req=='testeGet'){

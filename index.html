@@ -17,6 +17,7 @@
             <p class="navbar-item has-text-centered"><a v-on:click="aba = 1">Cadastrar</a></p>
             <p class="navbar-item has-text-centered"><a v-on:click="aba = 2">Procurar Freelas</a></p>
             <p class="navbar-item has-text-centered"><a v-on:click="aba = 3">Procurar Pessoas</a></p>
+            <p class="navbar-item has-text-centered"><a v-on:click="aba = 4">Login</a></p>            
         </nav>
         <transition name="fade">
             <section id="inicial" v-show = "aba == 0">
@@ -41,30 +42,14 @@
                         </div>
                     </div>
                     <div class="columns">
-                        <div class="column is-offset-7 is-offset-1-mobile is-10-mobile">
-                            <button class="button is-link" v-on:click="usuario=0">Profissional</button>
-                        </div>
-                        <div class="column">
-                            <button class="button is-link" v-on:click="usuario=1">Freelancer</button>
-                        </div>
-                    </div>
-                    <div class="columns">
-                        <div class="column is-4-desktop is-offset-7 is-offset-1-mobile is-10-mobile" v-if="usuario==0">
-                        <form class="form" method="POST" v-on:submit.prevent="cadastrarProfissional">
-                            <fieldset class="field">
-                                <label for="nome" class="label">
-                                    Nome Completo
-                                </label>
-                                <div class="control">
-                                    <input type="text" class="input" placeholder="Nome por favor" v-model="profissionalCadastro.nome">
-                                </div>
-                            </fieldset>
+                        <div class="column is-4-desktop is-offset-7 is-offset-1-mobile is-10-mobile">
+                        <form class="form" method="POST" v-on:submit.prevent="cadastrarUsuario">
                             <fieldset class="field">
                                 <label for="username" class="label">
                                     Nome de usuario
                                 </label>
                                 <div class="control">
-                                    <input type="text" id="username" name="username" class="input" placeholder="Para login" v-model="profissionalCadastro.username">
+                                    <input type="text" id="username" name="username" class="input" placeholder="Para login" v-model="loginCadastro.username">
                                 </div>
                             </fieldset>
                             <fieldset class="field">
@@ -72,31 +57,15 @@
                                     Email
                                 </label>
                                 <div class="control">
-                                    <input type="text" name="email" id="email" class="input" v-model="profissionalCadastro.email" placeholder="Seu endereco de email">
+                                    <input type="text" name="email" id="email" class="input" v-model="loginCadastro.email" placeholder="Seu endereco de email">
                                 </div>
-                            </fieldset>
-                            <fieldset>
-                                <label for="curriculo" class="label">
-                                    Coloque seu curriculo aqui
-                                </label>
-                                <div>
-                                    <input type="file" class="input">
-                                </div>
-                            </fieldset>
-                            <fieldset class="field">
-                                    <label for="telefone" class="label">
-                                        Telefone
-                                    </label>
-                                    <div class="control">
-                                        <input type="tel" name="telefone" id="telefone" class="input" v-model="profissionalCadastro.telefone" placeholder="Pode passar seu contato? :)">
-                                    </div>
                             </fieldset>
                             <fieldset class="field">
                                 <label for="pass" class="label">
                                     Senha
                                 </label>
                                 <div class="control">
-                                    <input type="password" name="pass" id="pass" v-model="profissionalCadastro.pass" class="input"
+                                    <input type="password" name="pass" id="pass" v-model="loginCadastro.pass" class="input"
                                         placeholder="Sua senha mais secreta">
                                 </div>
                             </fieldset>
@@ -105,55 +74,48 @@
                                     Confirmar senha
                                 </label>
                                 <div class="control">
-                                    <input type="password" name="pass2" id="pass2" class="input" v-model="profissionalCadastro.pass2"
+                                    <input type="password" name="pass2" id="pass2" class="input" v-model="loginCadastro.pass2"
                                         placeholder="Digite novamente">
                                 </div>
                             </fieldset>
-                            <button class="button is-primary" type="submit">Enviar</button>
-                        </form>
-                    </div>
-                    <div class="column is-4-desktop is-offset-7 is-offset-1-mobile is-10-mobile" v-if="usuario == 1">
-                        <form method="POST" v-on:submit.prevent="cadastrarFreela">
                             <fieldset class="field">
-                                <label for="titulo" class="label">
-                                    Titulo
+                                <label for="modalidade" class="label">
+                                    Modalidade
                                 </label>
-                                <div class="control">
-                                    <input type="text" name="titulo" v-model="freelaCadastro.titulo" id="titulo" class="input" placeholder="Qual a função">
+                                <div class="select is-primary">
+                                    <select name="tipoUsuario" v-model="opcaoProfissional">
+                                        <option value="0" disabled>Selecione uma Opção</option>
+                                        <option value="1">Contratante</option>
+                                        <option value="2">Profissional</option>
+                                    </select>
                                 </div>
                             </fieldset>
-                            <fieldset class="field">
-                                <label for="descricao" class="label">
-                                    Descrição
-                                </label>
-                                <div class="control">
-                                    <input type="text" name="descricao" v-model="freelaCadastro.descricao" id="descricao" class="input" placeholder="Breve resumo do que é para fazer">
-                                </div>
-                            </fieldset>
-                            <fieldset class="field">
-                                <label for="remuneracao" class="label">
-                                    Remuneração
-                                </label>
-                                <div class="control">
-                                    <input type="text" name="remuneracao" v-model="freelaCadastro.remuneracao" id="remuneracao" class="input" placeholder="Quanto se paga? :)">
-                                </div>
-                            </fieldset>
-                            <fieldset class="field">
-                                <label for="detalhes" class="label">
-                                    Detalhes
-                                </label>
-                                <div class="control">
-                                    <input type="text" name="detalhes" v-model="freelaCadastro.detalhes" id="detalhes" class="input" placeholder="Descreva mais coisas sobre o trabalho">
-                                </div>
-                            </fieldset>
-                            <fieldset class="field">
-                                <label for="urlImg">
-                                    Imagem
-                                </label>
-                                <div class="control">
-                                    <input type="file" name="urlImg" v-model="freelaCadastro.urlImg" class="input" id="urlImg">
-                                </div>
-                            </fieldset>
+                            <div v-if="opcaoProfissional == 1">
+                                <fieldset class="field">
+                                    <label for="nomeEmpresa" class="label">Nome da Empresa</label>
+                                    <input type="text" class="input" name="nomeEmpresa" placeholder="O nome da sua Empresa!" v-model="empresaCadastro.nomeEmpresa">
+                                </fieldset>
+                                <fieldset class="field">
+                                        <label for="cnpj" class="label">CNPJ</label>
+                                        <input type="text" class="input" name="cnpj" placeholder="O seu cnpj!" v-model="empresaCadastro.cnpj">
+                                </fieldset>
+                                <br>
+                            </div>
+                            <div v-if="opcaoProfissional == 2">
+                                <fieldset class="field">
+                                    <label for="cpf" class="label">CPF:</label>
+                                    <input type="text" class="input" name="cpf" id="cpf" placeholder="Seu CPF" v-model="profissionalCadastro.cpf">
+                                </fieldset>
+                                <fieldset class="field">
+                                    <label for="nome" class="label">Nome</label>
+                                    <input type="text" class="input" name="nome" id="nome" placeholder="Como você se chama?" v-model="profissionalCadastro.nome">
+                                </fieldset>
+                                <fieldset>
+                                    <label for="datanasc" class="label">Data de Nascimento</label>
+                                    <input type="date" class="input" name="datanasc" v-model="profissionalCadastro.dataNasc">
+                                </fieldset>
+                                <br>
+                            </div>
                             <button class="button is-primary" type="submit">Enviar</button>
                         </form>
                     </div>

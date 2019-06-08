@@ -3,10 +3,11 @@ window.onload = function(){
         el:"#app",
         data: {  
             titulo: "Aula 01 - Vue JS do jeito ninja!",
-            profissionalCadastro:{nome:"", username:"", email:"", telefone:"", pass:"", pass2:""},
-            freelaCadastro: {titulo:"", descricao:"", remuneracao:"", detalhes:"", urlImg:""},
-            textoFreela:"",
+            loginCadastro:{username:"", email:"", pass:"", pass2:""},
+            empresaCadastro:{nomeEmpresa:"", cnpj:""},
+            profissionalCadastro:{nomeProfissional:"", cpf:"", dataNasc:""},
             aba:0,
+            opcaoProfissional:0,
             oportunidades:[
                 {titulo:"Web Design", descricao:"Design de um site em wordpress"},
                 {titulo:"Ilustração", descricao:"Character Model de um Personagem"},
@@ -70,9 +71,29 @@ window.onload = function(){
                 }).then((response)=>{
                     console.log(response.data);
                 });
+            },
+            
+            cadastrarUsuario: ()=>{
+                console.log("Cadastrando Usuario!");
+                var objeto = {
+                    req:'cadastrarUsuario',
+                    username: app.loginCadastro.username,
+                    email: app.loginCadastro.email,
+                    pass: app.loginCadastro.pass
+                }
+                console.log(objeto);
+                axios.post('req.php', {
+                    req:'cadastrarUsuario',
+                    username: app.loginCadastro.username,
+                    email: app.loginCadastro.email,
+                    pass: app.loginCadastro.pass
+                }).then(function (response){
+                    console.log(response);
+                });
             }
         }
     });
+    
 
 
     function trocaBackground(){
