@@ -17,10 +17,10 @@
             <p class="navbar-item has-text-centered"><a v-on:click="aba = 1">Cadastrar</a></p>
             <p class="navbar-item has-text-centered"><a v-on:click="aba = 2">Procurar Freelas</a></p>
             <p class="navbar-item has-text-centered"><a v-on:click="aba = 3">Procurar Pessoas</a></p>
-            <p class="navbar-item has-text-centered"><a v-on:click="aba = 4">Login</a></p>            
+            <p class="navbar-item has-text-centered"><a v-on:click="aba = 4">Login</a></p>
         </nav>
         <transition name="fade">
-            <section id="inicial" v-show = "aba == 0">
+            <section id="inicial" v-show="aba == 0">
                 <div class="container">
                     <div class="columns">
                         <div class="column is-8-desktop is-offset-2-desktop">
@@ -43,82 +43,89 @@
                     </div>
                     <div class="columns">
                         <div class="column is-4-desktop is-offset-7 is-offset-1-mobile is-10-mobile">
-                        <form class="form" method="POST" v-on:submit.prevent="cadastrarUsuario">
-                            <fieldset class="field">
-                                <label for="username" class="label">
-                                    Nome de usuario
-                                </label>
-                                <div class="control">
-                                    <input type="text" id="username" name="username" class="input" placeholder="Para login" v-model="loginCadastro.username">
-                                </div>
-                            </fieldset>
-                            <fieldset class="field">
-                                <label for="email" class="label">
-                                    Email
-                                </label>
-                                <div class="control">
-                                    <input type="text" name="email" id="email" class="input" v-model="loginCadastro.email" placeholder="Seu endereco de email">
-                                </div>
-                            </fieldset>
-                            <fieldset class="field">
-                                <label for="pass" class="label">
-                                    Senha
-                                </label>
-                                <div class="control">
-                                    <input type="password" name="pass" id="pass" v-model="loginCadastro.pass" class="input"
-                                        placeholder="Sua senha mais secreta">
-                                </div>
-                            </fieldset>
-                            <fieldset class="field">
-                                <label for="pass2" class="label">
-                                    Confirmar senha
-                                </label>
-                                <div class="control">
-                                    <input type="password" name="pass2" id="pass2" class="input" v-model="loginCadastro.pass2"
-                                        placeholder="Digite novamente">
-                                </div>
-                            </fieldset>
-                            <fieldset class="field">
-                                <label for="modalidade" class="label">
-                                    Modalidade
-                                </label>
-                                <div class="select is-primary">
-                                    <select name="tipoUsuario" v-model="opcaoProfissional">
-                                        <option value="0" disabled>Selecione uma Opção</option>
-                                        <option value="1">Contratante</option>
-                                        <option value="2">Profissional</option>
-                                    </select>
-                                </div>
-                            </fieldset>
-                            <div v-if="opcaoProfissional == 1">
+                            <form class="form" method="POST" v-on:submit.prevent="cadastrarUsuario">
                                 <fieldset class="field">
-                                    <label for="nomeEmpresa" class="label">Nome da Empresa</label>
-                                    <input type="text" class="input" name="nomeEmpresa" placeholder="O nome da sua Empresa!" v-model="empresaCadastro.nomeEmpresa">
+                                    <label for="username" class="label">
+                                        Nome de usuario
+                                    </label>
+                                    <div class="control">
+                                        <input type="text" id="username" name="username" class="input"
+                                            placeholder="Para login" v-model="loginCadastro.username">
+                                    </div>
                                 </fieldset>
                                 <fieldset class="field">
+                                    <label for="email" class="label">
+                                        Email
+                                    </label>
+                                    <div class="control">
+                                        <input type="text" name="email" id="email" class="input"
+                                            v-model="loginCadastro.email" placeholder="Seu endereco de email">
+                                    </div>
+                                </fieldset>
+                                <fieldset class="field">
+                                    <label for="pass" class="label">
+                                        Senha
+                                    </label>
+                                    <div class="control">
+                                        <input type="password" name="pass" id="pass" v-model="loginCadastro.pass"
+                                            class="input" placeholder="Sua senha mais secreta">
+                                    </div>
+                                </fieldset>
+                                <fieldset class="field">
+                                    <label for="pass2" class="label">
+                                        Confirmar senha
+                                    </label>
+                                    <div class="control">
+                                        <input type="password" name="pass2" id="pass2" class="input"
+                                            v-model="loginCadastro.pass2" placeholder="Digite novamente">
+                                    </div>
+                                </fieldset>
+                                <fieldset class="field">
+                                    <label for="modalidade" class="label">
+                                        Modalidade
+                                    </label>
+                                    <div class="select is-primary">
+                                        <select name="tipoUsuario" v-model="opcaoProfissional">
+                                            <option value="0" disabled>Selecione uma Opção</option>
+                                            <option value="1">Contratante</option>
+                                            <option value="2">Profissional</option>
+                                        </select>
+                                    </div>
+                                </fieldset>
+                                <div v-if="opcaoProfissional == 1">
+                                    <fieldset class="field">
+                                        <label for="nomeEmpresa" class="label">Nome da Empresa</label>
+                                        <input type="text" class="input" name="nomeEmpresa"
+                                            placeholder="O nome da sua Empresa!" v-model="empresaCadastro.nomeEmpresa">
+                                    </fieldset>
+                                    <fieldset class="field">
                                         <label for="cnpj" class="label">CNPJ</label>
-                                        <input type="text" class="input" name="cnpj" placeholder="O seu cnpj!" v-model="empresaCadastro.cnpj">
-                                </fieldset>
-                                <br>
-                            </div>
-                            <div v-if="opcaoProfissional == 2">
-                                <fieldset class="field">
-                                    <label for="cpf" class="label">CPF:</label>
-                                    <input type="text" class="input" name="cpf" id="cpf" placeholder="Seu CPF" v-model="profissionalCadastro.cpf">
-                                </fieldset>
-                                <fieldset class="field">
-                                    <label for="nome" class="label">Nome</label>
-                                    <input type="text" class="input" name="nome" id="nome" placeholder="Como você se chama?" v-model="profissionalCadastro.nome">
-                                </fieldset>
-                                <fieldset>
-                                    <label for="datanasc" class="label">Data de Nascimento</label>
-                                    <input type="date" class="input" name="datanasc" v-model="profissionalCadastro.dataNasc">
-                                </fieldset>
-                                <br>
-                            </div>
-                            <button class="button is-primary" type="submit">Enviar</button>
-                        </form>
-                    </div>
+                                        <input type="text" class="input" name="cnpj" placeholder="O seu cnpj!"
+                                            v-model="empresaCadastro.cnpj">
+                                    </fieldset>
+                                    <br>
+                                </div>
+                                <div v-if="opcaoProfissional == 2">
+                                    <fieldset class="field">
+                                        <label for="cpf" class="label">CPF:</label>
+                                        <input type="text" class="input" name="cpf" id="cpf" placeholder="Seu CPF"
+                                            v-model="profissionalCadastro.cpf">
+                                    </fieldset>
+                                    <fieldset class="field">
+                                        <label for="nome" class="label">Nome</label>
+                                        <input type="text" class="input" name="nome" id="nome"
+                                            placeholder="Como você se chama?" v-model="profissionalCadastro.nome">
+                                    </fieldset>
+                                    <fieldset>
+                                        <label for="datanasc" class="label">Data de Nascimento</label>
+                                        <input type="date" class="input" name="datanasc"
+                                            v-model="profissionalCadastro.dataNasc">
+                                    </fieldset>
+                                    <br>
+                                </div>
+                                <button class="button is-primary" type="submit">Enviar</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -128,32 +135,200 @@
                 <div class="container">
                     <div class="columns">
                         <div class="column is-5-desktop">
-                           <h2 class="title">Encontre uma oportunidade!</h2>
+                            <h2 class="title">Encontre uma oportunidade!</h2>
                         </div>
                         <div class="column is-3-desktop is-offset-3">
                             <div class="control">
-                                <input class="input" type="text" v-model="textoFreela" name="textoFreela" id="textoFreela" placeholder="Procure um trabalho..." v-on:input="buscarFreela(textoFreela)">
+                                <input class="input" type="text" v-model="textoFreela" name="textoFreela"
+                                    id="textoFreela" placeholder="Procure um trabalho..."
+                                    v-on:input="buscarFreela(textoFreela)">
                             </div>
                         </div>
                     </div><br>
                     <div class="columns is-multiline">
-                        <div class="card column is-2 is-10-mobile is-offset-1-mobile" v-for="(item, index) in oportunidades" v-bind:class="{'is-offset-1': (index%4>0)}">
+                        <div class="card column is-2 is-10-mobile is-offset-1-mobile"
+                            v-for="(item, index) in oportunidades" v-bind:class="{'is-offset-1': (index%4>0)}">
                             <div class="card-image">
-                                    <figure class="image is-4by3">
-                                        <img src="img/freela1.jpg" alt="">
-                                    </figure>
+                                <figure class="image is-4by3">
+                                    <img src="img/freela1.jpg" alt="">
+                                </figure>
                             </div>
                             <div class="card-content">
                                 <div class="media">
-                                        <div class="media-content">
-                                            <p class="title is-4">
-                                                {{item.titulo}}
-                                            </p>
-                                            <p class="subtitle is-8">
-                                                {{item.descricao}}
-                                            </p>
-                                        </div>
+                                    <div class="media-content">
+                                        <p class="title is-4">
+                                            {{item.titulo}}
+                                        </p>
+                                        <p class="subtitle is-8">
+                                            {{item.descricao}}
+                                        </p>
+                                    </div>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </transition>
+        <transition>
+            <section v-show="aba==3">
+
+            </section>
+        </transition>
+        <transition>
+            <section v-show="aba==4">
+                <div id="secaoLogin" hidden>
+                    <div class="columns">
+                        <div class="column">
+                            <h2 class="title is-4 has-text-centered">Entre no Sistema: </h2>
+                        </div>
+                    </div>
+                    <div class="columns">
+                        <div class="column is-4-desktop is-offset-4-desktop">
+                            <div class="box">
+                                <form class="form">
+                                    <fieldset class="field">
+                                        <label for="login-email" class="label">
+                                            Email:
+                                        </label>
+                                        <input type="text" class="input" name="login-email" id="login-email"
+                                            placeholder="nome@exemplo.com">
+                                    </fieldset>
+                                    <fieldset class="field">
+                                        <label for="login-senha" class="label">
+                                            Senha:
+                                        </label>
+                                        <input type="password" class="input" name="login-senha" id="login-senha" placeholder="senha">
+                                    </fieldset>
+                                    <button type="submit" class="button is-primary">Login</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="secaoContratante" hidden>
+                    <div class="columns">
+                        <div class="column is-3-desktop">
+                            <nav class="panel">
+                                <p class="panel-heading">Painel do Usuário</p>
+                                <div class="panel-block">
+                                    <a v-on:click="abaProfissionalControle = 1">Ver Oportunidades Cadastradas</a>
+                                </div>
+                                <div class="panel-block">
+                                    <a v-on:click="abaProfissionalControle = 2">Cadastrar novo freela</a>
+                                </div>
+                                <div class="panel-block">
+                                    <a v-on:click="abaProfissionalControle = 3">Ver Profissionais Inscritos</a>
+                                </div>
+                            </nav>
+                        </div>
+                        <div class="column is-7-desktop" v-show="abaProfissionalControle == 1">
+                            <div class="columns is-multiline">
+                                <div class="card column is-3 is-10-mobile is-offset-1-mobile is-offset-1" v-for="(item, index) in oportunidades"
+                                    v-bind:class="{'is-offset-1': (index%4>0)}">
+                                    <div class="card-image">
+                                        <figure class="image is-4by3">
+                                            <img src="img/freela1.jpg" alt="">
+                                        </figure>
+                                    </div>
+                                    <div class="card-content">
+                                        <div class="media">
+                                            <div class="media-content">
+                                                <p class="title is-4">
+                                                    {{item.titulo}}
+                                                </p>
+                                                <p class="subtitle is-8">
+                                                    {{item.descricao}}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="column is-4-desktop" v-show="abaProfissionalControle == 2">
+                            <div class="box">
+                                <form class="form">
+                                    <fieldset class="field">
+                                        <label for="cadastroFreelaFuncao" class="label">
+                                            Função
+                                        </label>
+                                        <input type="text" class="input" placeholder="Ex: Modelador 3D" name="cadastroFreelaFuncao">
+                                    </fieldset>
+                                    <fieldset class="field">
+                                        <label for="cadastroFreelaRemuneracao" class="label">
+                                            Remuneração
+                                        </label>
+                                        <input type="text" class="input" placeholder="R$2000.00" name="cadastroFreelaRemuneracao">
+                                    </fieldset>
+                                    <fieldset class="field">
+                                        <label for="cadastroFreelaImg" class="label">Imagem</label>
+                                        <input type="file" placeholder="Coloque uma imagem para representar aqui..." name="cadastroFreelaImg" class="input">
+                                    </fieldset>
+                                    <button type="submit" class="button is-primary">Cadastrar</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="secaoFreelancer">
+                    <div class="columns">
+                        <div class="column is-3-desktop">
+                            <nav class="panel">
+                                <p class="panel-heading">Painel do Usuário</p>
+                                <div class="panel-block">
+                                    <a v-on:click="abaFreelancerControle = 1">Ver Oportunidades Vinculadas</a>
+                                </div>
+                                <div class="panel-block">
+                                    <a v-on:click="abaFreelancerControle = 2">Editar Perfil</a>
+                                </div>
+                            </nav>
+                        </div>
+                        <div class="column is-7-desktop" v-show="abaFreelancerControle == 1">
+                            <div class="columns is-multiline">
+                                <div class="card column is-3 is-10-mobile is-offset-1-mobile is-offset-1" v-for="(item, index) in oportunidades"
+                                    v-bind:class="{'is-offset-1': (index%4>0)}">
+                                    <div class="card-image">
+                                        <figure class="image is-4by3">
+                                            <img src="img/freela1.jpg" alt="">
+                                        </figure>
+                                    </div>
+                                    <div class="card-content">
+                                        <div class="media">
+                                            <div class="media-content">
+                                                <p class="title is-4">
+                                                    {{item.titulo}}
+                                                </p>
+                                                <p class="subtitle is-8">
+                                                    {{item.descricao}}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="column is-4-desktop" v-show="abaFreelancerControle == 2">
+                            <div class="box">
+                                <form class="form">
+                                    <fieldset class="field">
+                                        <label for="edicaoProfissionalDescricao" class="label">
+                                            Sua Descricao
+                                        </label>
+                                        <input type="text" class="input" placeholder="Ex: Modelador 3D" name="edicaoProfissionalDescricao">
+                                    </fieldset>
+                                    <fieldset class="field">
+                                        <label for="edicaoProfissionalCurriculo" class="label">
+                                            Curriculo
+                                        </label>
+                                        <input type="file" placeholder="Seu currículo!" name="edicaoProfissionalCurriculo" class="input">                                        
+                                    </fieldset>
+                                    <fieldset class="field">
+                                        <label for="cadastroProfissionalImg" class="label">Imagem de Perfil</label>
+                                        <input type="file" placeholder="Coloque uma imagem para te representar aqui..." name="cadastroProfissionalImg" class="input">
+                                    </fieldset>
+                                    <button type="submit" class="button is-primary">Finalizar Edição</button>
+                                </form>
                             </div>
                         </div>
                     </div>

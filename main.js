@@ -6,7 +6,10 @@ window.onload = function(){
             loginCadastro:{username:"", email:"", pass:"", pass2:""},
             empresaCadastro:{nomeEmpresa:"", cnpj:""},
             profissionalCadastro:{nomeProfissional:"", cpf:"", dataNasc:""},
+            usuarioLogado:{logado:false, tipo:0, username:"", id_usuario:""},
             aba:0,
+            abaProfissionalControle:0,
+            abaFreelancerControle:0,
             opcaoProfissional:0,
             oportunidades:[
                 {titulo:"Web Design", descricao:"Design de um site em wordpress"},
