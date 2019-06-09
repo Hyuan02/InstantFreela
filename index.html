@@ -177,7 +177,7 @@
         </transition>
         <transition>
             <section v-show="aba==4">
-                <div id="secaoLogin" hidden>
+                <div id="secaoLogin">
                     <div class="columns">
                         <div class="column">
                             <h2 class="title is-4 has-text-centered">Entre no Sistema: </h2>
@@ -186,19 +186,19 @@
                     <div class="columns">
                         <div class="column is-4-desktop is-offset-4-desktop">
                             <div class="box">
-                                <form class="form">
+                                <form class="form" method="POST" v-on:submit.prevent="login">
                                     <fieldset class="field">
                                         <label for="login-email" class="label">
                                             Email:
                                         </label>
-                                        <input type="text" class="input" name="login-email" id="login-email"
+                                        <input type="text" class="input" name="login-email" id="login-email" v-model="camposLogin.email"
                                             placeholder="nome@exemplo.com">
                                     </fieldset>
                                     <fieldset class="field">
                                         <label for="login-senha" class="label">
                                             Senha:
                                         </label>
-                                        <input type="password" class="input" name="login-senha" id="login-senha" placeholder="senha">
+                                        <input type="password" class="input" name="login-senha" id="login-senha" placeholder="senha" v-model="camposLogin.senha">
                                     </fieldset>
                                     <button type="submit" class="button is-primary">Login</button>
                                 </form>
@@ -271,7 +271,7 @@
                         </div>
                     </div>
                 </div>
-                <div id="secaoFreelancer">
+                <div id="secaoFreelancer"hidden>
                     <div class="columns">
                         <div class="column is-3-desktop">
                             <nav class="panel">

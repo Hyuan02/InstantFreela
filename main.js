@@ -6,6 +6,7 @@ window.onload = function(){
             loginCadastro:{username:"", email:"", pass:"", pass2:""},
             empresaCadastro:{nomeEmpresa:"", cnpj:""},
             profissionalCadastro:{nomeProfissional:"", cpf:"", dataNasc:""},
+            camposLogin:{email:"", senha:""},
             usuarioLogado:{logado:false, tipo:0, username:"", id_usuario:""},
             aba:0,
             abaProfissionalControle:0,
@@ -76,22 +77,16 @@ window.onload = function(){
                 });
             },
             
-            cadastrarUsuario: ()=>{
-                console.log("Cadastrando Usuario!");
-                var objeto = {
-                    req:'cadastrarUsuario',
-                    username: app.loginCadastro.username,
-                    email: app.loginCadastro.email,
-                    pass: app.loginCadastro.pass
-                }
-                console.log(objeto);
+            
+
+            login: ()=>{
+                console.log('enviando!');
                 axios.post('req.php', {
-                    req:'cadastrarUsuario',
-                    username: app.loginCadastro.username,
-                    email: app.loginCadastro.email,
-                    pass: app.loginCadastro.pass
+                    req:'login',
+                    email: app.camposLogin.email,
+                    pass: app.camposLogin.senha
                 }).then(function (response){
-                    console.log(response);
+                    console.log(response.data);
                 });
             }
         }
