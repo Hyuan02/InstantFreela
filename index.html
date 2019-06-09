@@ -139,9 +139,10 @@
                         </div>
                         <div class="column is-3-desktop is-offset-3">
                             <div class="control">
-                                <input class="input" type="text" v-model="textoFreela" name="textoFreela"
-                                    id="textoFreela" placeholder="Procure um trabalho..."
-                                    v-on:input="buscarFreela(textoFreela)">
+                                <input class="input" type="text" v-model="freelaBuscado" name="textoFreela"
+                                    id="textoFreela" placeholder="Procure um trabalho..." v-on:input="buscarFreela()"
+                                    >
+                                <!-- <button v-on:click="buscarFreela()" class="button is-primary">Buscar</button> -->
                             </div>
                         </div>
                     </div><br>

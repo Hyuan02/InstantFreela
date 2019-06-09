@@ -7,6 +7,7 @@ window.onload = function(){
             empresaCadastro:{nomeEmpresa:"", cnpj:""},
             profissionalCadastro:{nomeProfissional:"", cpf:"", dataNasc:""},
             camposLogin:{email:"", senha:""},
+            freelaBuscado:"",
             usuarioLogado:{logado:false, tipo:0, username:"", id_usuario:""},
             aba:0,
             abaProfissionalControle:0,
@@ -68,12 +69,14 @@ window.onload = function(){
                     }
             });
             },
-            buscarFreela: (response)=>{
+            buscarFreela: ()=>{
+                console.log(app.freelaBuscado);
                 axios.post('req.php',{
                     req:'buscarDadosFreela',
-                    nome: response
+                    nome: app.freelaBuscado
                 }).then((response)=>{
                     console.log(response.data);
+                    app.oportunidadesGerais = response.data.resultado;                    
                 });
             },
             

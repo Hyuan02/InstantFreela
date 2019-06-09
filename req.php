@@ -45,11 +45,11 @@ if(isset($req) && $req=="buscarDadosFreela"){
     $nome = $data['nome'];
     $busca = $nome;
     $conn->beginTransaction();
-    $sql = sprintf("SELECT * FROM freelas where titulo like :nome ");
+    $sql = sprintf("SELECT * FROM oportunidade where LOWER(titulo) like LOWER(:nome) ");
     $processo = $conn->prepare($sql);
     $processo->bindValue(":nome","%%".$nome."%%");
     $processo->execute();
-    $resultado = $processo->fetch(PDO::FETCH_ASSOC);
+    $resultado = $processo->fetchAll(PDO::FETCH_ASSOC);
 
     echo json_encode(
         array(
