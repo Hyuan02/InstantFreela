@@ -15,7 +15,7 @@
         <nav class="level navbar is-light" id="menu-p">
             <p class="navbar-item has-text-centered"><a v-on:click="aba = 0">Pagina Inicial</a></p>
             <p class="navbar-item has-text-centered"><a v-on:click="aba = 1">Cadastrar</a></p>
-            <p class="navbar-item has-text-centered"><a v-on:click="aba = 2">Procurar Freelas</a></p>
+            <p class="navbar-item has-text-centered"><a v-on:click="aba = 2; retornarFreelas();">Procurar Freelas</a></p>
             <p class="navbar-item has-text-centered"><a v-on:click="aba = 3">Procurar Pessoas</a></p>
             <p class="navbar-item has-text-centered"><a v-on:click="aba = 4">Login</a></p>
         </nav>
@@ -147,7 +147,7 @@
                     </div><br>
                     <div class="columns is-multiline">
                         <div class="card column is-2 is-10-mobile is-offset-1-mobile"
-                            v-for="(item, index) in oportunidades" v-bind:class="{'is-offset-1': (index%4>0)}">
+                            v-for="(item, index) in oportunidadesGerais" v-bind:class="{'is-offset-1': (index%4>0)}">
                             <div class="card-image">
                                 <figure class="image is-4by3">
                                     <img src="img/freela1.jpg" alt="">
@@ -224,7 +224,7 @@
                         </div>
                         <div class="column is-7-desktop" v-show="abaProfissionalControle == 1">
                             <div class="columns is-multiline">
-                                <div class="card column is-3 is-10-mobile is-offset-1-mobile is-offset-1" v-for="(item, index) in oportunidades"
+                                <div class="card column is-3 is-10-mobile is-offset-1-mobile is-offset-1" v-for="(item, index) in oportunidadesGerais"
                                     v-bind:class="{'is-offset-1': (index%4>0)}">
                                     <div class="card-image">
                                         <figure class="image is-4by3">
@@ -286,7 +286,7 @@
                         </div>
                         <div class="column is-7-desktop" v-show="abaFreelancerControle == 1">
                             <div class="columns is-multiline">
-                                <div class="card column is-3 is-10-mobile is-offset-1-mobile is-offset-1" v-for="(item, index) in oportunidades"
+                                <div class="card column is-3 is-10-mobile is-offset-1-mobile is-offset-1" v-for="(item, index) in oportunidadesGerais"
                                     v-bind:class="{'is-offset-1': (index%4>0)}">
                                     <div class="card-image">
                                         <figure class="image is-4by3">

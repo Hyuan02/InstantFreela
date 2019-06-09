@@ -79,8 +79,8 @@ if(isset($req) && $req=="cadastrarUsuario"){
         "codigo" => 200,
         "mensagem" => "Tudo Legal"
     ));
-
 }
+
     if(isset($req) && $req=="login"){ // == vai fazer uma comparação, enquanto = vai atribuir
         $email = $data['email'];
         $senha = $data['pass'];
@@ -128,6 +128,25 @@ if(isset($req) && $req=="cadastrarUsuario"){
                 "mensagem3" => $nomeempresa
             )
         );
+    }
+
+    if(isset($req) && $req=="obterFreelasGeral"){
+        $freelas = $data['freelas'];
+    
+        $conn->beginTransaction();
+    
+        $sql = sprintf("SELECT * FROM oportunidade");
+        $processo = $conn->prepare($sql);
+        $processo->execute();
+        $resultado = $processo->fetchAll(PDO::FETCH_ASSOC);
+
+        $oportunidades = $resultado;
+        
+
+        echo json_encode(array(
+            "codigo" => 200,
+            "oportunidades" => $oportunidades
+        ));
     }
 
 

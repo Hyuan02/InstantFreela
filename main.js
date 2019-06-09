@@ -12,7 +12,7 @@ window.onload = function(){
             abaProfissionalControle:0,
             abaFreelancerControle:0,
             opcaoProfissional:0,
-            oportunidades:[
+            oportunidadesGerais:[
                 {titulo:"Web Design", descricao:"Design de um site em wordpress"},
                 {titulo:"Ilustração", descricao:"Character Model de um Personagem"},
                 {titulo:"Web Design", descricao:"Design de um site em wordpress"},
@@ -87,6 +87,18 @@ window.onload = function(){
                     pass: app.camposLogin.senha
                 }).then(function (response){
                     console.log(response.data);
+                });
+            },
+
+            retornarFreelas: ()=>{
+                console.log('a retornar');
+                axios.get('req.php', {
+                    params:{
+                        req: 'obterFreelasGeral'
+                    }
+                }).then(function (response){
+                    console.log(response.data);
+                    app.oportunidadesGerais = response.data.oportunidades;
                 });
             }
         }
