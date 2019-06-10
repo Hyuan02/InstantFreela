@@ -15,7 +15,7 @@
         <nav class="level navbar is-light" id="menu-p">
             <p class="navbar-item has-text-centered"><a v-on:click="aba = 0">Pagina Inicial</a></p>
             <p class="navbar-item has-text-centered"><a v-on:click="aba = 1">Cadastrar</a></p>
-            <p class="navbar-item has-text-centered"><a v-on:click="aba = 2">Procurar Freelas</a></p>
+            <p class="navbar-item has-text-centered"><a v-on:click="aba = 2; retornarFreelas();">Procurar Freelas</a></p>
             <p class="navbar-item has-text-centered"><a v-on:click="aba = 3">Procurar Pessoas</a></p>
             <p class="navbar-item has-text-centered"><a v-on:click="aba = 4">Login</a></p>
         </nav>
@@ -156,15 +156,16 @@
                         </div>
                         <div class="column is-3-desktop is-offset-3">
                             <div class="control">
-                                <input class="input" type="text" v-model="textoFreela" name="textoFreela"
-                                    id="textoFreela" placeholder="Procure um trabalho..."
-                                    v-on:input="buscarFreela(textoFreela)">
+                                <input class="input" type="text" v-model="freelaBuscado" name="textoFreela"
+                                    id="textoFreela" placeholder="Procure um trabalho..." v-on:input="buscarFreela()"
+                                    >
+                                <!-- <button v-on:click="buscarFreela()" class="button is-primary">Buscar</button> -->
                             </div>
                         </div>
                     </div><br>
                     <div class="columns is-multiline">
                         <div class="card column is-2 is-10-mobile is-offset-1-mobile"
-                            v-for="(item, index) in oportunidades" v-bind:class="{'is-offset-1': (index%4>0)}">
+                            v-for="(item, index) in oportunidadesGerais" v-bind:class="{'is-offset-1': (index%4>0)}">
                             <div class="card-image">
                                 <figure class="image is-4by3">
                                     <img src="img/freela1.jpg" alt="">
@@ -194,7 +195,7 @@
         </transition>
         <transition>
             <section v-show="aba==4">
-                <div id="secaoLogin" hidden>
+                <div id="secaoLogin">
                     <div class="columns">
                         <div class="column">
                             <h2 class="title is-4 has-text-centered">Entre no Sistema: </h2>
@@ -203,19 +204,19 @@
                     <div class="columns">
                         <div class="column is-4-desktop is-offset-4-desktop">
                             <div class="box">
-                                <form class="form">
+                                <form class="form" method="POST" v-on:submit.prevent="login">
                                     <fieldset class="field">
                                         <label for="login-email" class="label">
                                             Email:
                                         </label>
-                                        <input type="text" class="input" name="login-email" id="login-email"
+                                        <input type="text" class="input" name="login-email" id="login-email" v-model="camposLogin.email"
                                             placeholder="nome@exemplo.com">
                                     </fieldset>
                                     <fieldset class="field">
                                         <label for="login-senha" class="label">
                                             Senha:
                                         </label>
-                                        <input type="password" class="input" name="login-senha" id="login-senha" placeholder="senha">
+                                        <input type="password" class="input" name="login-senha" id="login-senha" placeholder="senha" v-model="camposLogin.senha">
                                     </fieldset>
                                     <button type="submit" class="button is-primary">Login</button>
                                 </form>
@@ -241,7 +242,7 @@
                         </div>
                         <div class="column is-7-desktop" v-show="abaProfissionalControle == 1">
                             <div class="columns is-multiline">
-                                <div class="card column is-3 is-10-mobile is-offset-1-mobile is-offset-1" v-for="(item, index) in oportunidades"
+                                <div class="card column is-3 is-10-mobile is-offset-1-mobile is-offset-1" v-for="(item, index) in oportunidadesGerais"
                                     v-bind:class="{'is-offset-1': (index%4>0)}">
                                     <div class="card-image">
                                         <figure class="image is-4by3">
@@ -288,7 +289,7 @@
                         </div>
                     </div>
                 </div>
-                <div id="secaoFreelancer">
+                <div id="secaoFreelancer"hidden>
                     <div class="columns">
                         <div class="column is-3-desktop">
                             <nav class="panel">
@@ -303,7 +304,7 @@
                         </div>
                         <div class="column is-7-desktop" v-show="abaFreelancerControle == 1">
                             <div class="columns is-multiline">
-                                <div class="card column is-3 is-10-mobile is-offset-1-mobile is-offset-1" v-for="(item, index) in oportunidades"
+                                <div class="card column is-3 is-10-mobile is-offset-1-mobile is-offset-1" v-for="(item, index) in oportunidadesGerais"
                                     v-bind:class="{'is-offset-1': (index%4>0)}">
                                     <div class="card-image">
                                         <figure class="image is-4by3">

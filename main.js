@@ -5,7 +5,9 @@ window.onload = function(){
             titulo: "Aula 01 - Vue JS do jeito ninja!",
             loginCadastro:{username:"", email:"", pass:"", pass2:""},
             empresaCadastro:{nomeEmpresa:"", cnpj:""},
-            profissionalCadastro:{nomeProfissional:"", ocupacao:"", cpf:"", dataNasc:""},
+            profissionalCadastro:{nomeProfissional:"", cpf:"", dataNasc:"", ocupacao:""},
+            camposLogin:{email:"", senha:""},
+            freelaBuscado:"",
             usuarioLogado:{logado:false, tipo:0, username:"", id_usuario:""},
             imgUpload:'',
             curriculoUpload:'',
@@ -13,7 +15,7 @@ window.onload = function(){
             abaProfissionalControle:0,
             abaFreelancerControle:0,
             opcaoProfissional:0,
-            oportunidades:[
+            oportunidadesGerais:[
                 {titulo:"Web Design", descricao:"Design de um site em wordpress"},
                 {titulo:"Ilustração", descricao:"Character Model de um Personagem"},
                 {titulo:"Web Design", descricao:"Design de um site em wordpress"},
@@ -69,12 +71,14 @@ window.onload = function(){
                     }
             });
             },
-            buscarFreela: (response)=>{
+            buscarFreela: ()=>{
+                console.log(app.freelaBuscado);
                 axios.post('req.php',{
                     req:'buscarDadosFreela',
-                    nome: response
+                    nome: app.freelaBuscado
                 }).then((response)=>{
                     console.log(response.data);
+                    app.oportunidadesGerais = response.data.resultado;                    
                 });
             },
             
@@ -118,6 +122,30 @@ window.onload = function(){
                     }
                 }).then(function (response){
                     console.log(response.data);
+                });
+            },
+            
+
+            login: ()=>{
+                console.log('enviando!');
+                axios.post('req.php', {
+                    req:'login',
+                    email: app.camposLogin.email,
+                    pass: app.camposLogin.senha
+                }).then(function (response){
+                    console.log(response.data);
+                });
+            },
+
+            retornarFreelas: ()=>{
+                console.log('a retornar');
+                axios.get('req.php', {
+                    params:{
+                        req: 'obterFreelasGeral'
+                    }
+                }).then(function (response){
+                    console.log(response.data);
+                    app.oportunidadesGerais = response.data.oportunidades;
                 });
             },
 
