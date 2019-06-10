@@ -5,8 +5,10 @@ window.onload = function(){
             titulo: "Aula 01 - Vue JS do jeito ninja!",
             loginCadastro:{username:"", email:"", pass:"", pass2:""},
             empresaCadastro:{nomeEmpresa:"", cnpj:""},
-            profissionalCadastro:{nomeProfissional:"", cpf:"", dataNasc:""},
+            profissionalCadastro:{nomeProfissional:"", ocupacao:"", cpf:"", dataNasc:""},
             usuarioLogado:{logado:false, tipo:0, username:"", id_usuario:""},
+            imgUpload:'',
+            curriculoUpload:'',
             aba:0,
             abaProfissionalControle:0,
             abaFreelancerControle:0,
@@ -78,21 +80,54 @@ window.onload = function(){
             
             cadastrarUsuario: ()=>{
                 console.log("Cadastrando Usuario!");
-                var objeto = {
-                    req:'cadastrarUsuario',
-                    username: app.loginCadastro.username,
-                    email: app.loginCadastro.email,
-                    pass: app.loginCadastro.pass
+                var dados = {};
+                var form = new FormData();
+                console.log(app.curriculoUpload);
+                console.log(app.imgUpload);
+                if(app.loginCadastro.pass != app.loginCadastro.pass2){
+                    alert('Senha incorreta!');
+                    return;
                 }
-                console.log(objeto);
-                axios.post('req.php', {
-                    req:'cadastrarUsuario',
-                    username: app.loginCadastro.username,
-                    email: app.loginCadastro.email,
-                    pass: app.loginCadastro.pass
+                form.append('req','cadastrarUsuario');
+                form.append('username', app.loginCadastro.username);
+                form.append('email', app.loginCadastro.email);
+                form.append('pass', app.loginCadastro.pass);
+                form.append('opcaoProfissional',app.opcaoProfissional);
+
+                dados.username = app.loginCadastro.username;
+                dados.email = app.loginCadastro.email;
+                dados.pass = app.loginCadastro.pass;
+                if(app.opcaoProfissional == 1){
+                    
+                }
+                else if(app.opcaoProfissional == 2){
+                    dados.nomeProfissional = app.profissionalCadastro.nomeProfissional;
+                    dados.cpf = app.profissionalCadastro.cpf;
+                    dados.dataNasc = app.profissionalCadastro.dataNasc;
+
+                    form.append('nomeProfissional', app.profissionalCadastro.nomeProfissional);
+                    form.append('cpf',app.profissionalCadastro.cpf);
+                    form.append('dataNasc',app.profissionalCadastro.dataNasc);
+                    form.append('imgUpload', app.imgUpload);
+                    form.append('ocupacao', app.profissionalCadastro.ocupacao);
+                    form.append('curriculoUpload', app.curriculoUpload);
+                }
+                axios.post('req.php', form, {
+                    headers:{
+                        'Content-Type':'multipart/form-data'
+                    }
                 }).then(function (response){
-                    console.log(response);
+                    console.log(response.data);
                 });
+            },
+
+            inserirCurriculo: ()=>{
+                app.curriculoUpload = document.querySelector('#curriculoProfissional').files[0];
+                console.log(app.curriculoUpload);
+            }, 
+            inserirImagem: ()=>{
+                app.imgUpload = document.querySelector('#fotoProfissional').files[0];
+                console.log(app.imgUpload);
             }
         }
     });

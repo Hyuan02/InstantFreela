@@ -114,12 +114,29 @@
                                     <fieldset class="field">
                                         <label for="nome" class="label">Nome</label>
                                         <input type="text" class="input" name="nome" id="nome"
-                                            placeholder="Como você se chama?" v-model="profissionalCadastro.nome">
+                                            placeholder="Como você se chama?" v-model="profissionalCadastro.nomeProfissional">
+                                    </fieldset>
+                                    <fieldset class="field">
+                                        <label for="ocupacao" class="label">Ocupacao</label>
+                                        <input type="text" class="input" name="ocupacao" id="ocupacao"
+                                            placeholder="O que voce faz?" v-model="profissionalCadastro.ocupacao">
                                     </fieldset>
                                     <fieldset>
                                         <label for="datanasc" class="label">Data de Nascimento</label>
                                         <input type="date" class="input" name="datanasc"
                                             v-model="profissionalCadastro.dataNasc">
+                                    </fieldset>
+                                    <fieldset class="field"> 
+                                        <label for="curriculoProfissional" class="label">
+                                            Seu currículo
+                                        </label>
+                                        <input type="file" id = "curriculoProfissional" ref="curriculoProfissional" class="input" v-on:change="inserirCurriculo()">
+                                    </fieldset>
+                                    <fieldset class="field"> 
+                                        <label for="fotoProfissional" class="label">
+                                            Sua foto
+                                        </label>
+                                        <input type="file" id="fotoProfissional" name="fotoProfissional" class="input" v-on:change="inserirImagem()">
                                     </fieldset>
                                     <br>
                                 </div>

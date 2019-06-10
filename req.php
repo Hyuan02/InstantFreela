@@ -1,7 +1,17 @@
 <?php
 
+if(json_decode(file_get_contents("php://input"), TRUE) != null){
+    $data = json_decode(file_get_contents("php://input"), TRUE);
+    $req = $data['req'];
+}
+else if($_POST != NULL){
+    $data = $_POST;
+    $req = $data['req'];
+}
+else{
+    $req = $_GET['req'];
+}
 
-$data = json_decode(file_get_contents("php://input"), TRUE);
 
 require_once 'dbconfig.php';
 $conexao = "pgsql:host=$host;port=5432;dbname=$db;user=$username;password=$password";
@@ -14,11 +24,13 @@ catch(PDOException $e){
     echo $e->getMessage();
 }
 
+echo json_encode($data);
 
-if($data['req'] == null)
-    $req = $_GET['req'];
-else
-    $req = $data['req'];
+
+// if($data['req'] == null)
+//     $req = $_GET['req'];
+// else
+//     $req = $data['req'];
 
 
 
@@ -44,7 +56,6 @@ if(isset($req) && $req=="pegarDadosProfissional"){
 if(isset($req) && $req=="buscarDadosFreela"){
     $nome = $data['nome'];
     $busca = $nome;
-    $conn->beginTransaction();
     $sql = sprintf("SELECT * FROM freelas where titulo like :nome ");
     $processo = $conn->prepare($sql);
     $processo->bindValue(":nome","%%".$nome."%%");
@@ -63,22 +74,46 @@ if(isset($req) && $req=="buscarDadosFreela"){
 if(isset($req) && $req="cadastrarUsuario"){
     $username = $data['username'];
     $email = $data['email'];
-    $senha = $data['pass'];
-
-    $conn->beginTransaction();
-
-    $sql = sprintf("INSERT INTO login VALUES ((select max(id) from login)+1, :username, :senha, :email)");
-    $processo = $conn->prepare($sql);
-    $processo->bindValue(":username", $username);
-    $processo->bindValue(":email", $email);
-    $processo->bindValue(":senha", $senha);
-    $processo->execute();
+    $pass = $data['pass'];
+    $nomeProfissional = $data['nomeProfissional'];
+    $cpf = $data['cpf'];
+    $dataNasc = $data['dataNasc'];
+    $ocupacao = $data['ocupacao'];
+    if(move_uploaded_file($_FILES['imgUpload']['tmp_name'], "fotosPerfil/".$_FILES['imgUpload']['name']) && move_uploaded_file($_FILES['curriculoUpload']['tmp_name'], "curriculos/".$_FILES['curriculoUpload']['name'])){
+        $conn->beginTransaction();
+    $sql = sprintf('INSERT INTO login VALUES ((select max(id) from login)+1, :username, :senha, :email)');
+    $processo1 = $conn->prepare($sql);
+    $processo1->bindValue(':username', $username);
+    $processo1->bindValue(':senha', $pass);
+    $processo1->bindValue(':email',$email);
+    $processo1->execute();
     $conn->commit();
 
-    echo json_encode(array(
-        "codigo" => 200,
-        "mensagem" => "Tudo Legal"
-    ));
+    if($data['opcaoProfissional'] == 1){
+        $sql2 = sprintf();
+    }
+    if($data['opcaoProfissional'] == 2){
+        $sql2 = sprintf('INSERT INTO profissional values((select max(id) from login), :curriculo, :ocupacao, :cpf, :imagem_perfil, :nome_profissional, :data_nascimento)');
+        $processo2 = $conn->prepare($sql2);
+        $processo2->bindValue(':curriculo',"curriculos/".$_FILES['curriculoUpload']['name']);
+        $processo2->bindValue(':ocupacao', $ocupacao);
+        $processo2->bindValue(':cpf', $cpf);
+        $processo2->bindValue(':imagem_perfil',"fotosPerfil/".$_FILES['imgUpload']['name']);
+        $processo2->bindValue(':nome_profissional',$nomeProfissional);
+        $processo2->bindValue(':data_nascimento', "1997-02-05");
+        $processo2->execute();
+
+    }
+
+        echo json_encode(array(
+            'codigo' => 200,
+            'mensagem' => 'cadastro concluido'
+        ));
+
+
+    }
+
+    
 }
 
 // if(isset($req) && $req=='testeGet'){
