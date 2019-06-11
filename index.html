@@ -165,7 +165,7 @@
                     </div><br>
                     <div class="columns is-multiline">
                         <div class="card column is-2 is-10-mobile is-offset-1-mobile"
-                            v-for="(item, index) in oportunidadesGerais" v-bind:class="{'is-offset-1': (index%4>0)}">
+                            v-for="(item, index) in oportunidadesGerais" v-bind:class="{'is-offset-1': (index%4>0)}" v-on:click="abrirModal(item)">
                             <div class="card-image">
                                 <figure class="image is-4by3">
                                     <img src="img/freela1.jpg" alt="">
@@ -183,6 +183,22 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                    <div class="modal" v-bind:class="{'is-active':modalAtivo}">
+                        <div class="modal-background"></div>
+                        <div class="modal-card">
+                            <header class="modal-card-head">
+                                <p class="modal-card-title">{{conteudoModal.titulo}}</p>
+                                <button class="delete" aria-label="close" v-on:click="fecharModal()"></button>
+                            </header>
+                            <section class="modal-card-body">
+                                
+                            </section>
+                            <footer class="modal-card-foot">
+                                <button class="button is-success">Se inscrever</button>
+                                <button class="button" v-on:click="fecharModal()">Cancelar</button>
+                            </footer>
                         </div>
                     </div>
                 </div>

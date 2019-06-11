@@ -24,7 +24,6 @@ catch(PDOException $e){
     echo $e->getMessage();
 }
 
-echo json_encode($data);
 
 
 // if($data['req'] == null)
@@ -115,7 +114,7 @@ if(isset($req) && $req=="cadastrarUsuario"){
     }
 }
 
-    if(isset($req) && $req=="login"){ // == vai fazer uma comparação, enquanto = vai atribuir
+    if(isset($req) && $req == "login"){ // == vai fazer uma comparação, enquanto = vai atribuir
         $email = $data['email'];
         $senha = $data['pass'];
         
@@ -165,7 +164,7 @@ if(isset($req) && $req=="cadastrarUsuario"){
     }
 
     if(isset($req) && $req=="obterFreelasGeral"){
-        $freelas = $data['freelas'];
+        // $freelas = $data['freelas'];
     
         $conn->beginTransaction();
     

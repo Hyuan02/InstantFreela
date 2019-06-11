@@ -11,6 +11,8 @@ window.onload = function(){
             usuarioLogado:{logado:false, tipo:0, username:"", id_usuario:""},
             imgUpload:'',
             curriculoUpload:'',
+            modalAtivo:false,
+            conteudoModal:{},
             aba:0,
             abaProfissionalControle:0,
             abaFreelancerControle:0,
@@ -156,6 +158,14 @@ window.onload = function(){
             inserirImagem: ()=>{
                 app.imgUpload = document.querySelector('#fotoProfissional').files[0];
                 console.log(app.imgUpload);
+            },
+            abrirModal: (oportunidade)=>{
+                app.modalAtivo = true;
+                app.conteudoModal = oportunidade;
+            },
+            fecharModal:()=>{
+                app.modalAtivo = false;
+                
             }
         }
     });
