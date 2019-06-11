@@ -211,7 +211,7 @@
         </transition>
         <transition>
             <section v-show="aba==4">
-                <div id="secaoLogin">
+                <div id="secaoLogin" v-show="usuarioLogado.logado == false || usuarioLogado.tipo == 0">
                     <div class="columns">
                         <div class="column">
                             <h2 class="title is-4 has-text-centered">Entre no Sistema: </h2>
@@ -240,7 +240,7 @@
                         </div>
                     </div>
                 </div>
-                <div id="secaoContratante" hidden>
+                <div id="secaoContratante" v-show="usuarioLogado.logado == true && usuarioLogado.tipo == 2">
                     <div class="columns">
                         <div class="column is-3-desktop">
                             <nav class="panel">

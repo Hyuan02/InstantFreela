@@ -135,7 +135,19 @@ window.onload = function(){
                     email: app.camposLogin.email,
                     pass: app.camposLogin.senha
                 }).then(function (response){
-                    console.log(response.data);
+                    if(response.data.codigo == 200){
+                        app.usuarioLogado.logado = true;
+                        app.usuarioLogado.tipo = response.data.categoriaProfissional;
+                        app.usuarioLogado.username = response.data.usuario.nome_usuario;
+                        app.usuarioLogado.id_usuario = response.data.usuario.id;
+                        if(response.data.categoriaProfissional == 2){
+                            app.usuarioLogado.cnpj = response.data.infoAdicional.cnpj;
+                            app.usuarioLogado.nomeEmpresa = response.data.infoAdicional.nomeEmpresa;
+                        }
+                        else if(response.data.categoriaProfissional == 1){
+                            console.log('prosseguindo');
+                        }
+                    }
                 });
             },
 

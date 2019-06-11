@@ -117,7 +117,8 @@ if(isset($req) && $req=="cadastrarUsuario"){
     if(isset($req) && $req == "login"){ // == vai fazer uma comparação, enquanto = vai atribuir
         $email = $data['email'];
         $senha = $data['pass'];
-        
+        $catProfissional = 0;
+        $infoAdicional = null;
         //$conn->beginTransaction();
         
         $sql = sprintf("SELECT nome_usuario, id FROM login where email like :email AND senha like :senha");
@@ -141,6 +142,11 @@ if(isset($req) && $req=="cadastrarUsuario"){
         $processo2->bindValue(":id", $id);
         $processo2->execute();
         $resultado2 = $processo2->fetch(PDO::FETCH_ASSOC);
+       
+        if($resultado2){
+            $catProfissional = 1;
+            $infoAdicional = $resultado2;
+        }
         
         $nomeprofissional = $resultado2['nome_profissional'];
 
@@ -150,15 +156,19 @@ if(isset($req) && $req=="cadastrarUsuario"){
         $processo3->execute();
         $resultado3 = $processo3->fetch(PDO::FETCH_ASSOC);
         
+        if($resultado3){
+            $catProfissional = 2;
+            $infoAdicional = $resultado3;
+        }
         $nomeempresa = $resultado3['nome_empresa'];
 
     
         echo json_encode(
             array(
                 "codigo" => 200,
-                "mensagem" => $resultado,
-                "mensagem2" => $nomeprofissional,
-                "mensagem3" => $nomeempresa
+                "usuario" => $resultado,
+                "infoAdicional" => $infoAdicional,
+                "categoriaProfissional" => $catProfissional
             )
         );
     }
