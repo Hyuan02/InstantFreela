@@ -274,7 +274,7 @@
                                 </div>
                             </nav>
                         </div>
-                        <div class="column is-7-desktop" v-show="abaProfissionalControle == 1">
+                        <div class="column is-7-desktop" v-show="abaProfissionalControle == 1 && editarFreela == false">
                             <div class="columns is-multiline">
                                 <div class="card column is-3 is-10-mobile is-offset-1-mobile is-offset-1" v-for="(item, index) in oportunidadesContratante"
                                     v-bind:class="{'is-offset-1': (index%4>0)}">
@@ -297,10 +297,35 @@
                                     </div>
                                     <footer class="card-footer">
                                         <!-- <a href="#" class="card-footer-item">Save</a> -->
-                                        <a href="#" class="card-footer-item">Edit</a>
+                                        <a href="#" class="card-footer-item" v-on:click="editarFreelaUnico(item)">Edit</a>
                                         <a href="#" class="card-footer-item" v-on:click="apagarFreela(item.id)">Delete</a>
                                     </footer>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="column is-4-desktop" v-show="editarFreela == true"> 
+                            <div class="box">
+                                <form class="form" v-on:submit.prevent="editarAntigoFreela">
+                                    <fieldset class="field">
+                                        <label for="cadastroFreelaTitulo" class="label">
+                                            Título
+                                        </label>
+                                        <input type="text" class="input" placeholder="Ex: Modelador 3D" name="cadastroFreelaTitulo" v-model="freelaEditar.titulo">
+                                    </fieldset>
+                                    <fieldset class="field">
+                                        <label for="cadastroFreelaFuncao" class="label">
+                                            Função
+                                        </label>
+                                        <input type="text" class="input" placeholder="Ex: Modelador 3D" name="cadastroFreelaFuncao" v-model="freelaEditar.funcao">
+                                    </fieldset>
+                                    <fieldset class="field">
+                                        <label for="cadastroFreelaRemuneracao" class="label">
+                                            Remuneração
+                                        </label>
+                                        <input type="text" class="input" placeholder="R$2000.00" name="cadastroFreelaRemuneracao" v-model="freelaEditar.remuneracao">
+                                    </fieldset>
+                                    <button type="submit" class="button is-primary">Editar</button>
+                                </form>
                             </div>
                         </div>
                         <div class="column is-4-desktop" v-show="abaProfissionalControle == 2">

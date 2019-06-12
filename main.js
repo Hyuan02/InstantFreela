@@ -9,6 +9,7 @@ window.onload = function(){
             camposLogin:{email:"", senha:""},
             freelaBuscado:"",
             usuarioLogado:{logado:false, tipo:0, username:"", id_usuario:""},
+            freelaEditar:{titulo:"",funcao:"",remuneracao:""},
             novaOportunidade:{titulo:"",funcao:"",remuneracao:""},
             imgUpload:'',
             curriculoUpload:'',
@@ -20,6 +21,7 @@ window.onload = function(){
             abaProfissionalControle:0,
             abaFreelancerControle:0,
             opcaoProfissional:0,
+            editarFreela:false,
             oportunidadesGerais:[
                 {titulo:"Web Design", descricao:"Design de um site em wordpress"},
                 {titulo:"Ilustração", descricao:"Character Model de um Personagem"},
@@ -237,12 +239,33 @@ window.onload = function(){
                 if(confirm("Deseja apagar mesmo o freela?")){
                     axios.post('req.php',{
                         req:"apagarFreelaId",
-                        id_freela:id_item
+                        id_freela:idItem
                     }).then((response) =>{
                         console.log(response.data);
                     });
                 }
             
+            },
+
+            editarFreelaUnico:(item)=>{
+                app.freelaEditar.idItem = item.id;
+                app.freelaEditar.titulo = item.titulo;
+                app.freelaEditar.funcao = item.descricao;
+                app.freelaEditar.remuneracao = item.remuneracao;
+                app.editarFreela = true;
+            },
+
+            editarAntigoFreela:()=>{
+                console.log(app.freelaEditar);
+                axios.post('req.php',{
+                    req:'atualizarFreelaId',
+                    id_freela:app.freelaEditar.idItem,
+                    titulo: app.freelaEditar.titulo,
+                    descricao: app.freelaEditar.funcao,
+                    remuneracao: app.freelaEditar.remuneracao
+                }).then(response=>{
+                    console.log(response.data);
+                });
             }
         }
     });

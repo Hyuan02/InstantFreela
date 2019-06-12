@@ -228,6 +228,18 @@ if(isset($req) && $req=="cadastrarUsuario"){
         ));
     }
 
+    if(isset($req) && $req == "apagarFreelaId"){
+        $id_freela = $data['id_freela'];
+        $sql = sprintf('Delete  FROM oportunidade where oportunidade.id = :id_freela');
+        $processo= $conn->prepare($sql);
+        $processo->bindValue(':id_freela',$id_freela);
+        $processo->execute();
+        echo json_encode(array(
+            "codigo" => 200,
+            'mensagem'=>"deletou"
+        ));
+    }
+
     if(isset($req) && $req=="cadastrarNovoFreela"){
         $titulo = $data['titulo'];
         $descricao = $data['descricao'];
@@ -252,6 +264,28 @@ if(isset($req) && $req=="cadastrarUsuario"){
             'codigo' => 200,
             'mensagem' => 'cadastro de freela concluido'
         ));
+    }
+
+    if(isset($req) && $req =="atualizarFreelaId"){
+        $titulo = $data['titulo'];
+        $descricao = $data['descricao'];
+        $remuneracao = $data['remuneracao'];
+        $id_freela = $data['id_freela'];
+
+        $sql = sprintf('UPDATE oportunidade SET titulo = :titulo, descricao = :descricao, remuneracao = :remuneracao where id = :id_freela');
+        $processo1 = $conn->prepare($sql);
+        $processo1->bindValue(':titulo', $titulo);
+        $processo1->bindValue(':descricao', $descricao);
+        $processo1->bindValue(':remuneracao',$remuneracao);
+        $processo1->bindValue(':id_freela',$id_freela);
+        $processo1->execute();
+
+        echo json_encode(
+            array(
+                'codigo' => 200,
+                'mensagem' => 'edicao de freela concluido'
+            )
+        );
     }
 
 
