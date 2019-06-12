@@ -9,10 +9,13 @@ window.onload = function(){
             camposLogin:{email:"", senha:""},
             freelaBuscado:"",
             usuarioLogado:{logado:false, tipo:0, username:"", id_usuario:""},
+            novaOportunidade:{titulo:"",funcao:"",remuneracao:""},
             imgUpload:'',
             curriculoUpload:'',
             modalAtivo:false,
             conteudoModal:{},
+            oportunidadesContratante:{},
+            profissionais:{},
             aba:0,
             abaProfissionalControle:0,
             abaFreelancerControle:0,
@@ -104,7 +107,9 @@ window.onload = function(){
                 dados.email = app.loginCadastro.email;
                 dados.pass = app.loginCadastro.pass;
                 if(app.opcaoProfissional == 1){
-                    
+                    form.append('nomeEmpresa', app.empresaCadastro.nomeEmpresa);
+                    console.log(app.empresaCadastro.cnpj.replace(/(\.|\/|\-)/g,""));
+                    form.append('cnpj',app.empresaCadastro.cnpj.replace(/(\.|\/|\-)/g,""));
                 }
                 else if(app.opcaoProfissional == 2){
                     dados.nomeProfissional = app.profissionalCadastro.nomeProfissional;
@@ -112,7 +117,7 @@ window.onload = function(){
                     dados.dataNasc = app.profissionalCadastro.dataNasc;
 
                     form.append('nomeProfissional', app.profissionalCadastro.nomeProfissional);
-                    form.append('cpf',app.profissionalCadastro.cpf);
+                    form.append('cpf',app.profissionalCadastro.cpf.replace(/(\.|\/|\-)/g,""));
                     form.append('dataNasc',app.profissionalCadastro.dataNasc);
                     form.append('imgUpload', app.imgUpload);
                     form.append('ocupacao', app.profissionalCadastro.ocupacao);
@@ -123,7 +128,13 @@ window.onload = function(){
                         'Content-Type':'multipart/form-data'
                     }
                 }).then(function (response){
-                    console.log(response.data);
+                    if(response.data.codigo == 200){
+                        alert("Usuário Cadastrado!");
+                        app.loginCadastro.username = app.loginCadastro.email = app.loginCadastro.pass = app.loginCadastro.pass2 = "";
+                        app.profissionalCadastro.nomeProfissional = app.profissionalCadastro.cpf = app.profissionalCadastro.dataNasc = app.profissionalCadastro.ocupacao = "";
+                        app.empresaCadastro.nomeEmpresa = app.empresaCadastro.cnpj = "";
+                        app.opcaoProfissional = 0;
+                    }
                 });
             },
             
@@ -169,7 +180,10 @@ window.onload = function(){
             }, 
             inserirImagem: ()=>{
                 app.imgUpload = document.querySelector('#fotoProfissional').files[0];
-                console.log(app.imgUpload);
+                // console.log(app.imgUpload);
+            },
+            inserirImagemFreela: ()=>{
+                app.imgUpload = document.querySelector('#cadastroFreelaImg').files[0];
             },
             abrirModal: (oportunidade)=>{
                 app.modalAtivo = true;
@@ -178,6 +192,42 @@ window.onload = function(){
             fecharModal:()=>{
                 app.modalAtivo = false;
                 
+            },
+
+            obterOpotunidadesContratante:()=>{
+                axios.get('req.php', {
+                    params:{
+                        req: 'obterOportunidadesContratante',
+                        id_contratante: app.usuarioLogado.id_usuario
+                    }
+                }).then(function (response){
+                    app.oportunidadesContratante = response.data.oportunidades;
+                });
+                },
+            obterProfissionais:()=>{
+                axios.get('req.php',{
+                    params:{
+                        req:'obterProfissionaisGeral'
+                    }
+                }).then(function (response){
+                    app.profissionais = response.data.profissionais;
+                });
+            },
+
+            cadastrarNovoFreela:()=>{
+                var form = new FormData();
+                form.append('req', 'cadastrarNovoFreela');
+                form.append('titulo',app.novaOportunidade.titulo);
+                form.append('funcao',app.novaOportunidade.funcao);
+                form.append('remuneracao',app.novaOportunidade.remuneracao);
+                form.append('imgFreela',app.imgUpload);
+                axios.post('req.php', form, {
+                    headers:{
+                        'Content-Type':'multipart/form-data'
+                    }
+                }).then(function (response){
+                    console.log(response.data);
+                });
             }
         }
     });

@@ -75,24 +75,38 @@ if(isset($req) && $req=="cadastrarUsuario"){
     $username = $data['username'];
     $email = $data['email'];
     $pass = $data['pass'];
-    $nomeProfissional = $data['nomeProfissional'];
-    $cpf = $data['cpf'];
-    $dataNasc = $data['dataNasc'];
-    $ocupacao = $data['ocupacao'];
-    if(move_uploaded_file($_FILES['imgUpload']['tmp_name'], "fotosPerfil/".$_FILES['imgUpload']['name']) && move_uploaded_file($_FILES['curriculoUpload']['tmp_name'], "curriculos/".$_FILES['curriculoUpload']['name'])){
-        $conn->beginTransaction();
-    $sql = sprintf('INSERT INTO login VALUES ((select max(id) from login)+1, :username, :senha, :email)');
-    $processo1 = $conn->prepare($sql);
-    $processo1->bindValue(':username', $username);
-    $processo1->bindValue(':senha', $pass);
-    $processo1->bindValue(':email',$email);
-    $processo1->execute();
-    $conn->commit();
-
     if($data['opcaoProfissional'] == 1){
-        $sql2 = sprintf();
+        $conn->beginTransaction();
+        $sql = sprintf('INSERT INTO login VALUES ((select max(id) from login)+1, :username, :senha, :email)');
+        $processo1 = $conn->prepare($sql);
+        $processo1->bindValue(':username', $username);
+        $processo1->bindValue(':senha', $pass);
+        $processo1->bindValue(':email',$email);
+        $processo1->execute();
+        $conn->commit();
+        $nomeEmpresa = $data['nomeEmpresa'];
+        $cnpj = $data['cnpj'];
+
+        $sql2 = sprintf('INSERT INTO contratante VALUES ((select max(id) from login), :cnpj, :nome_empresa)');
+        $processo2 = $conn->prepare($sql2);
+        $processo2->bindValue(':cnpj',$cnpj);
+        $processo2->bindValue(':nome_empresa',$nomeEmpresa);
+        $processo2->execute();
     }
-    if($data['opcaoProfissional'] == 2){
+    else if($data['opcaoProfissional'] == 2){
+        $nomeProfissional = $data['nomeProfissional'];
+        $cpf = $data['cpf'];
+        $dataNasc = $data['dataNasc'];
+        $ocupacao = $data['ocupacao'];
+        if(move_uploaded_file($_FILES['imgUpload']['tmp_name'], "fotosPerfil/".$_FILES['imgUpload']['name']) && move_uploaded_file($_FILES['curriculoUpload']['tmp_name'], "curriculos/".$_FILES['curriculoUpload']['name'])){
+            $conn->beginTransaction();
+        $sql = sprintf('INSERT INTO login VALUES ((select max(id) from login)+1, :username, :senha, :email)');
+        $processo1 = $conn->prepare($sql);
+        $processo1->bindValue(':username', $username);
+        $processo1->bindValue(':senha', $pass);
+        $processo1->bindValue(':email',$email);
+        $processo1->execute();
+        $conn->commit();
         $sql2 = sprintf('INSERT INTO profissional values((select max(id) from login), :curriculo, :ocupacao, :cpf, :imagem_perfil, :nome_profissional, :data_nascimento)');
         $processo2 = $conn->prepare($sql2);
         $processo2->bindValue(':curriculo',"curriculos/".$_FILES['curriculoUpload']['name']);
@@ -102,16 +116,13 @@ if(isset($req) && $req=="cadastrarUsuario"){
         $processo2->bindValue(':nome_profissional',$nomeProfissional);
         $processo2->bindValue(':data_nascimento', "1997-02-05");
         $processo2->execute();
-
     }
 
-        echo json_encode(array(
-            'codigo' => 200,
-            'mensagem' => 'cadastro concluido'
-        ));
-
-
     }
+    echo json_encode(array(
+        'codigo' => 200,
+        'mensagem' => 'cadastro concluido'
+    ));
 }
 
     if(isset($req) && $req == "login"){ // == vai fazer uma comparação, enquanto = vai atribuir
@@ -176,7 +187,7 @@ if(isset($req) && $req=="cadastrarUsuario"){
     if(isset($req) && $req=="obterFreelasGeral"){
         // $freelas = $data['freelas'];
     
-        $conn->beginTransaction();
+        // $conn->beginTransaction();
     
         $sql = sprintf("SELECT * FROM oportunidade");
         $processo = $conn->prepare($sql);
@@ -189,6 +200,31 @@ if(isset($req) && $req=="cadastrarUsuario"){
         echo json_encode(array(
             "codigo" => 200,
             "oportunidades" => $oportunidades
+        ));
+    }
+
+    if(isset($req) && $req == "obterOportunidadesContratante"){
+        $id_contratante = $_GET['id_contratante'];
+        $sql = sprintf('SELECT * FROM oportunidade WHERE contratante = :id_contratante');
+        $processo = $conn->prepare($sql);
+        $processo->bindValue(':id_contratante', $id_contratante);
+        $processo->execute();
+        $oportunidades = $processo->fetchAll(PDO::FETCH_ASSOC);
+
+        echo json_encode(array(
+            "codigo" => 200,
+            "oportunidades" => $oportunidades
+        ));
+    }
+
+    if(isset($req) && $req == "obterProfissionaisGeral"){
+        $sql = sprintf('SELECT * FROM profissional');
+        $processo= $conn->prepare($sql);
+        $processo->execute();
+        $profissionais = $processo->fetchAll(PDO::FETCH_ASSOC);
+        echo json_encode(array(
+            "codigo" => 200,
+            "profissionais" => $profissionais
         ));
     }
 

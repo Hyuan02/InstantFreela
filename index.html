@@ -16,7 +16,7 @@
             <p class="navbar-item has-text-centered"><a v-on:click="aba = 0">Pagina Inicial</a></p>
             <p class="navbar-item has-text-centered"><a v-on:click="aba = 1">Cadastrar</a></p>
             <p class="navbar-item has-text-centered"><a v-on:click="aba = 2; retornarFreelas();">Procurar Freelas</a></p>
-            <p class="navbar-item has-text-centered"><a v-on:click="aba = 3">Procurar Pessoas</a></p>
+            <p class="navbar-item has-text-centered"><a v-on:click="aba = 3; obterProfissionais();">Procurar Pessoas</a></p>
             <p class="navbar-item has-text-centered"><a v-on:click="aba = 4">Login</a></p>
         </nav>
         <transition name="fade">
@@ -206,7 +206,25 @@
         </transition>
         <transition>
             <section v-show="aba==3">
-
+                <div class="columns is-multiline">
+                        <div class="box column is-2 is-offset-1 candidatos" v-for="(item,index) in profissionais">
+                                <article class="media">
+                                  <div class="media-left">
+                                    <figure class="image is-128x128">
+                                      <img :src="item.imagem_perfil" alt="Image">
+                                    </figure>
+                                  </div>
+                                  <div class="media-content">
+                                    <div class="content">
+                                      <p>
+                                        <strong>{{item.nome_profissional}}</strong>
+                                        <small>{{item.ocupacao}}</small>
+                                      </p>
+                                    </div>
+                                  </div>
+                                </article>
+                        </div>
+                </div>
             </section>
         </transition>
         <transition>
@@ -246,7 +264,7 @@
                             <nav class="panel">
                                 <p class="panel-heading">Painel do Usuário</p>
                                 <div class="panel-block">
-                                    <a v-on:click="abaProfissionalControle = 1">Ver Oportunidades Cadastradas</a>
+                                    <a v-on:click="abaProfissionalControle = 1; obterOpotunidadesContratante();">Ver Oportunidades Cadastradas</a>
                                 </div>
                                 <div class="panel-block">
                                     <a v-on:click="abaProfissionalControle = 2">Cadastrar novo freela</a>
@@ -258,7 +276,7 @@
                         </div>
                         <div class="column is-7-desktop" v-show="abaProfissionalControle == 1">
                             <div class="columns is-multiline">
-                                <div class="card column is-3 is-10-mobile is-offset-1-mobile is-offset-1" v-for="(item, index) in oportunidadesGerais"
+                                <div class="card column is-3 is-10-mobile is-offset-1-mobile is-offset-1" v-for="(item, index) in oportunidadesContratante"
                                     v-bind:class="{'is-offset-1': (index%4>0)}">
                                     <div class="card-image">
                                         <figure class="image is-4by3">
@@ -266,38 +284,49 @@
                                         </figure>
                                     </div>
                                     <div class="card-content">
-                                        <div class="media">
-                                            <div class="media-content">
+                                        <div class="content">
+                                            
                                                 <p class="title is-4">
                                                     {{item.titulo}}
                                                 </p>
                                                 <p class="subtitle is-8">
                                                     {{item.descricao}}
                                                 </p>
-                                            </div>
+                                          
                                         </div>
                                     </div>
+                                    <footer class="card-footer">
+                                        <!-- <a href="#" class="card-footer-item">Save</a> -->
+                                        <a href="#" class="card-footer-item">Edit</a>
+                                        <a href="#" class="card-footer-item">Delete</a>
+                                    </footer>
                                 </div>
                             </div>
                         </div>
                         <div class="column is-4-desktop" v-show="abaProfissionalControle == 2">
                             <div class="box">
-                                <form class="form">
+                                <form class="form" v-on:submit.prevent="cadastrarNovoFreela">
+                                    <fieldset class="field">
+                                        <label for="cadastroFreelaTitulo" class="label">
+                                            Título
+                                        </label>
+                                        <input type="text" class="input" placeholder="Ex: Modelador 3D" name="cadastroFreelaTitulo" v-model="novaOportunidade.titulo">
+                                    </fieldset>
                                     <fieldset class="field">
                                         <label for="cadastroFreelaFuncao" class="label">
                                             Função
                                         </label>
-                                        <input type="text" class="input" placeholder="Ex: Modelador 3D" name="cadastroFreelaFuncao">
+                                        <input type="text" class="input" placeholder="Ex: Modelador 3D" name="cadastroFreelaFuncao" v-model="novaOportunidade.funcao">
                                     </fieldset>
                                     <fieldset class="field">
                                         <label for="cadastroFreelaRemuneracao" class="label">
                                             Remuneração
                                         </label>
-                                        <input type="text" class="input" placeholder="R$2000.00" name="cadastroFreelaRemuneracao">
+                                        <input type="text" class="input" placeholder="R$2000.00" name="cadastroFreelaRemuneracao" v-model="novaOportunidade.remuneracao">
                                     </fieldset>
                                     <fieldset class="field">
                                         <label for="cadastroFreelaImg" class="label">Imagem</label>
-                                        <input type="file" placeholder="Coloque uma imagem para representar aqui..." name="cadastroFreelaImg" class="input">
+                                        <input type="file" placeholder="Coloque uma imagem para representar aqui..." name="cadastroFreelaImg" id="cadastroFreelaImg" class="input">
                                     </fieldset>
                                     <button type="submit" class="button is-primary">Cadastrar</button>
                                 </form>
@@ -311,7 +340,7 @@
                             <nav class="panel">
                                 <p class="panel-heading">Painel do Usuário</p>
                                 <div class="panel-block">
-                                    <a v-on:click="abaFreelancerControle = 1">Ver Oportunidades Vinculadas</a>
+                                    <a v-on:click="abaFreelancerControle = 1;">Ver Oportunidades Vinculadas</a>
                                 </div>
                                 <div class="panel-block">
                                     <a v-on:click="abaFreelancerControle = 2">Editar Perfil</a>
