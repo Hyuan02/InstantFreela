@@ -3,4 +3,4 @@
 $host = "localhost";
 $db = "freelaapp";
 $username = "postgres";
-$password = "ufc123";
+$password = "postgre";

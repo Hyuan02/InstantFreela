@@ -184,6 +184,7 @@ window.onload = function(){
             },
             inserirImagemFreela: ()=>{
                 app.imgUpload = document.querySelector('#cadastroFreelaImg').files[0];
+                console.log(app.imgUpload);
             },
             abrirModal: (oportunidade)=>{
                 app.modalAtivo = true;
@@ -215,10 +216,12 @@ window.onload = function(){
             },
 
             cadastrarNovoFreela:()=>{
+                console.log(app.imgUpload);
                 var form = new FormData();
                 form.append('req', 'cadastrarNovoFreela');
+                form.append('contratante',app.usuarioLogado.id_usuario);
                 form.append('titulo',app.novaOportunidade.titulo);
-                form.append('funcao',app.novaOportunidade.funcao);
+                form.append('descricao',app.novaOportunidade.funcao);
                 form.append('remuneracao',app.novaOportunidade.remuneracao);
                 form.append('imgFreela',app.imgUpload);
                 axios.post('req.php', form, {
@@ -228,6 +231,18 @@ window.onload = function(){
                 }).then(function (response){
                     console.log(response.data);
                 });
+            },
+            apagarFreela:(idItem)=>{
+                console.log(idItem);
+                if(confirm("Deseja apagar mesmo o freela?")){
+                    axios.post('req.php',{
+                        req:"apagarFreelaId",
+                        id_freela:id_item
+                    }).then((response) =>{
+                        console.log(response.data);
+                    });
+                }
+            
             }
         }
     });

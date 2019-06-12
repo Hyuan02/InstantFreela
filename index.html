@@ -168,7 +168,7 @@
                             v-for="(item, index) in oportunidadesGerais" v-bind:class="{'is-offset-1': (index%4>0)}" v-on:click="abrirModal(item)">
                             <div class="card-image">
                                 <figure class="image is-4by3">
-                                    <img src="img/freela1.jpg" alt="">
+                                    <img :src="item.imagem_oportunidade" alt="">
                                 </figure>
                             </div>
                             <div class="card-content">
@@ -298,7 +298,7 @@
                                     <footer class="card-footer">
                                         <!-- <a href="#" class="card-footer-item">Save</a> -->
                                         <a href="#" class="card-footer-item">Edit</a>
-                                        <a href="#" class="card-footer-item">Delete</a>
+                                        <a href="#" class="card-footer-item" v-on:click="apagarFreela(item.id)">Delete</a>
                                     </footer>
                                 </div>
                             </div>
@@ -326,7 +326,7 @@
                                     </fieldset>
                                     <fieldset class="field">
                                         <label for="cadastroFreelaImg" class="label">Imagem</label>
-                                        <input type="file" placeholder="Coloque uma imagem para representar aqui..." name="cadastroFreelaImg" id="cadastroFreelaImg" class="input">
+                                        <input type="file" placeholder="Coloque uma imagem para representar aqui..." name="cadastroFreelaImg" id="cadastroFreelaImg" class="input" v-on:change="inserirImagemFreela()">
                                     </fieldset>
                                     <button type="submit" class="button is-primary">Cadastrar</button>
                                 </form>

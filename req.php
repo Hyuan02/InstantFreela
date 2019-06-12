@@ -187,7 +187,7 @@ if(isset($req) && $req=="cadastrarUsuario"){
     if(isset($req) && $req=="obterFreelasGeral"){
         // $freelas = $data['freelas'];
     
-        // $conn->beginTransaction();
+        $conn->beginTransaction();
     
         $sql = sprintf("SELECT * FROM oportunidade");
         $processo = $conn->prepare($sql);
@@ -225,6 +225,32 @@ if(isset($req) && $req=="cadastrarUsuario"){
         echo json_encode(array(
             "codigo" => 200,
             "profissionais" => $profissionais
+        ));
+    }
+
+    if(isset($req) && $req=="cadastrarNovoFreela"){
+        $titulo = $data['titulo'];
+        $descricao = $data['descricao'];
+        $remuneracao = $data['remuneracao'];
+        // $detalhes = $data['detalhes'];
+        $contratante = $data['contratante'];
+            if(move_uploaded_file($_FILES['imgFreela']['tmp_name'], "imgFreela/".$_FILES['imgFreela']['name'])){
+                $conn->beginTransaction();
+            $sql = sprintf('INSERT INTO oportunidade VALUES (4,:contratante, :descricao, :remuneracao, :titulo, :url_img)');
+            $processo1 = $conn->prepare($sql);
+            $processo1->bindValue(':descricao', $descricao);
+            $processo1->bindValue(':remuneracao', $remuneracao);
+            // $processo1->bindValue(':detalhes',$detalhes);
+            $processo1->bindValue(':contratante', intval($contratante));
+            $processo1->bindValue(':titulo',  $titulo);
+            $processo1->bindValue(':url_img',"imgFreela/".$_FILES['imgFreela']['name']);
+            $processo1->execute();
+            $conn->commit();
+    
+        }
+        echo json_encode(array(
+            'codigo' => 200,
+            'mensagem' => 'cadastro de freela concluido'
         ));
     }
 
