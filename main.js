@@ -265,6 +265,12 @@ window.onload = function(){
                     remuneracao: app.freelaEditar.remuneracao
                 }).then(response=>{
                     console.log(response.data);
+
+                    this.alert("Freela editado!");
+
+                    app.editarFreela = false;
+                    app.obterOpotunidadesContratante();
+                    this.abaProfissionalControle = 1;
                 });
             }
         }
