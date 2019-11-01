@@ -193,10 +193,12 @@
                                 <button class="delete" aria-label="close" v-on:click="fecharModal()"></button>
                             </header>
                             <section class="modal-card-body">
-                                
+                                <figure class="image is-4by3">
+                                    <img :src="conteudoModal.imagem_oportunidade" alt="">
+                                </figure>
                             </section>
                             <footer class="modal-card-foot">
-                                <button class="button is-success">Se inscrever</button>
+                                <button class="button is-success" v-on:click="inscreverOportunidade()">Se inscrever</button>
                                 <button class="button" v-on:click="fecharModal()">Cancelar</button>
                             </footer>
                         </div>

@@ -255,6 +255,9 @@ window.onload = function(){
                 app.editarFreela = true;
             },
 
+            inscreverOportunidade:()=>{
+                this.alert("Inscrito!");
+            },
             editarAntigoFreela:()=>{
                 console.log(app.freelaEditar);
                 axios.post('req.php',{
@@ -272,7 +275,9 @@ window.onload = function(){
                     app.obterOpotunidadesContratante();
                     this.abaProfissionalControle = 1;
                 });
-            }
+            },
+
+            
         }
     });
     
